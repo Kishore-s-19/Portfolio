@@ -50,6 +50,8 @@
     margin-bottom: 35px;
     text-align: center;
     letter-spacing: -0.01em;
+    color: #ffffff;
+    /* Explicitly white per theme request */
 }
 
 .skills-grid {

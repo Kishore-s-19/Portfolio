@@ -15,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 const skillCategories = [
     {
         title: "Tools & Technologies",
-        color: "#ffffff", // Changed to white per user request
+        color: "#6366f1", // Using Indigo for icons again for contrast on white cards
         skills: [
             { name: "Figma", level: "Intermediate", desc: "UI/UX design and prototyping", icon: <FaFigma /> },
             { name: "Git", level: "Intermediate", desc: "Version control, branching, collaboration", icon: <FaGitAlt /> },
@@ -49,31 +49,31 @@ const SkillsSection = () => {
             skillCategories.forEach((_, idx) => {
                 const selector = `.category-group-${idx}`;
 
-                // Animate the category container
+                // Animate category title and underline
                 gsap.from(selector, {
                     scrollTrigger: {
                         trigger: selector,
-                        start: "top 85%",
-                        toggleActions: "play none none none"
+                        start: "top 90%",
                     },
                     opacity: 0,
-                    y: 40,
-                    duration: 1,
+                    y: 20,
+                    duration: 0.8,
                     ease: "power3.out"
                 });
 
-                // Animate the cards inside the category
+                // Animate cards with stagger
                 gsap.from(`${selector} .skill-card`, {
                     scrollTrigger: {
                         trigger: selector,
-                        start: "top 95%",
+                        start: "top 90%",
                     },
                     opacity: 0,
-                    scale: 0.9,
-                    y: 20,
+                    y: 30,
+                    scale: 0.95,
                     stagger: 0.1,
-                    duration: 0.8,
-                    ease: "back.out(1.7)"
+                    duration: 0.6,
+                    ease: "power2.out",
+                    delay: 0.2
                 });
             });
 
@@ -100,7 +100,7 @@ const SkillsSection = () => {
 
                 {skillCategories.map((category, catIdx) => (
                     <div key={catIdx} className={`skills-category category-group-${catIdx}`}>
-                        <h3 className="category-title" style={{ color: category.color }}>
+                        <h3 className="category-title" style={{ color: '#ffffff' }}>
                             {category.title}
                         </h3>
                         <div className="skills-grid">
