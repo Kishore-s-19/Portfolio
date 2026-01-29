@@ -8,6 +8,7 @@
   --font-inter: "Inter", sans-serif;
   --font-outfit: "Outfit", sans-serif;
   --font-helvetica: "Helvetica Now Display Bold", sans-serif;
+  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
   --ease-luxury: cubic-bezier(0.83, 0, 0.17, 1);
 
   --animate-bounce-slow: bounce-slow 5s ease-in-out infinite;

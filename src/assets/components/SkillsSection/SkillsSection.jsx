@@ -4,7 +4,7 @@ import {
     FaGitAlt, FaGithub, FaAws, FaFigma
 } from 'react-icons/fa';
 import {
-    SiVercel, SiPostman, SiRailway, SiRender, SiAdobepremierepro
+    SiVercel, SiPostman, SiRailway, SiRender, SiAdobepremierepro, SiEclipseide, SiBlender
 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 import gsap from 'gsap';
@@ -27,6 +27,8 @@ const skillCategories = [
             { name: "Vercel", level: "Intermediate", desc: "Frontend deployment, serverless functions", icon: <SiVercel />, brandColor: "#000000" },
             { name: "Postman", level: "Intermediate", desc: "API testing and documentation", icon: <SiPostman />, brandColor: "#FF6C37" },
             { name: "VS Code", level: "Advanced", desc: "Primary IDE with custom setup", icon: <VscVscode />, brandColor: "#007ACC" },
+            { name: "Eclipse IDE", level: "Advanced", desc: "Java development environment", icon: <SiEclipseide />, brandColor: "#2C2255" },
+            { name: "Blender", level: "Beginner", desc: "3D modeling and animation", icon: <SiBlender />, brandColor: "#EA7600" },
         ]
     }
 ];
