@@ -103,6 +103,7 @@ function App() {
   // const [showAboutPage, setShowAboutPage] = useState(false); // State removed to allow scrolling
   const aboutPageRef = useRef(null);
   const aboutTextRef = useRef(null);
+  const portraitRef = useRef(null);
   const projectsRef = useRef(null);
   const contactRef = useRef(null);
   const landingRef = useRef(null);
@@ -175,6 +176,27 @@ function App() {
         stagger: 0.02,
         ease: "none"
       });
+
+      // Animation for Portrait Slide-in
+      gsap.fromTo(portraitRef.current,
+        {
+          opacity: 0,
+          x: 100,
+          scale: 0.9
+        },
+        {
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 1.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: portraitRef.current,
+            start: "top 90%",
+            toggleActions: "restart none none reverse"
+          }
+        }
+      );
 
       // Refresh ScrollTrigger after a short delay
       setTimeout(() => ScrollTrigger.refresh(), 500);
@@ -266,7 +288,7 @@ function App() {
               })()}
             </div>
 
-            <div className="w-full md:w-[55%] md:-mr-[10%] h-[50vh] md:h-[95vh] flex justify-center items-center opacity-0 translate-x-0 md:translate-x-12 scale-95 animate-portrait-in fill-mode-forwards relative z-20">
+            <div ref={portraitRef} className="w-full md:w-[55%] md:-mr-[10%] h-[50vh] md:h-[95vh] flex justify-center items-center relative z-20">
               <div className="relative w-full max-h-[95vh] aspect-[4/5] overflow-hidden">
                 <div
                   className="w-full h-full"
