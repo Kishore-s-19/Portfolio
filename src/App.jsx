@@ -158,13 +158,14 @@ function App() {
       gsap.to(letters, {
         scrollTrigger: {
           trigger: aboutPageRef.current,
-          start: 'top center',
-          end: 'bottom 20%',
-          scrub: true,
+          start: 'top 70%',
+          end: 'bottom 30%',
+          scrub: 1, // Smoother scrub
         },
         color: '#ffffff',
-        opacity: 1,
-        stagger: 0.05,
+        duration: 0.1,
+        stagger: 0.02,
+        ease: "none"
       });
 
       // Refresh ScrollTrigger after a short delay
@@ -219,13 +220,17 @@ function App() {
         <div className="opacity-0 animate-fade-in fill-mode-forwards">
           <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef}>
             <div className="relative z-10 min-h-[90vh] flex flex-col md:flex-row items-center justify-between px-[5%] max-w-[1400px] mx-auto gap-10 font-commissioner">
-              <div className="flex-1 text-[26px] md:text-[32px] leading-snug font-medium tracking-wide max-w-[600px] pt-32 pb-10">
+              <div className="flex-1 text-[26px] leading-snug font-medium tracking-wide max-w-[500px] pt-32 pb-10">
                 {aboutLines.map((line, i) => (
-                  line === "" ? <div key={i} className="h-8" /> : (
-                    <p key={i} className="mb-2">
-                      {line.split('').map((char, j) => (
-                        <span key={j} className="reveal-char inline-block opacity-100 text-[#555555] transition-colors duration-200">
-                          {char === ' ' ? '\u00A0' : char}
+                  line === "" ? <div key={i} className="h-6" /> : (
+                    <p key={i} className="mb-1">
+                      {line.split(' ').map((word, wordIdx) => (
+                        <span key={wordIdx} className="inline-block whitespace-nowrap mr-[0.25em]">
+                          {word.split('').map((char, charIdx) => (
+                            <span key={charIdx} className="reveal-char text-[#555555]">
+                              {char}
+                            </span>
+                          ))}
                         </span>
                       ))}
                     </p>
