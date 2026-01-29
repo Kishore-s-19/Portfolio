@@ -221,7 +221,7 @@ function App() {
         <div className="opacity-0 animate-fade-in fill-mode-forwards">
           <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef}>
             <div className="relative z-10 min-h-[90vh] flex flex-col md:flex-row items-center justify-between px-[5%] max-w-[1400px] mx-auto gap-10 font-helvetica font-bold">
-              <div ref={aboutTextRef} className="flex-1 text-[32px] leading-tight tracking-tight max-w-[850px] pt-32 pb-10">
+              <div ref={aboutTextRef} className="flex-1 text-[32px] leading-tight tracking-tight max-w-[700px] pt-32 pb-10">
                 {aboutLines.map((line, i) => (
                   line === "" ? <div key={i} className="h-6" /> : (
                     <p key={i} className="mb-1">
@@ -239,8 +239,8 @@ function App() {
                 ))}
               </div>
 
-              <div className="w-full md:w-3/5 h-[90vh] flex justify-center items-center opacity-0 translate-x-12 scale-95 animate-portrait-in fill-mode-forwards relative">
-                <div className="relative w-full max-h-[90vh] aspect-[4/5] overflow-hidden md:translate-x-6">
+              <div className="w-full md:w-3/5 h-[90vh] flex justify-center items-center opacity-0 translate-x-24 scale-95 animate-portrait-in fill-mode-forwards relative">
+                <div className="relative w-full max-h-[90vh] aspect-[4/5] overflow-hidden md:translate-x-12">
                   <div
                     className="w-full h-full"
                     style={{
