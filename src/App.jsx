@@ -181,18 +181,19 @@ function App() {
       gsap.fromTo(portraitRef.current,
         {
           opacity: 0,
-          x: 100,
-          scale: 0.9
+          x: 60,
+          scale: 0.95
         },
         {
           opacity: 1,
           x: 0,
           scale: 1,
-          duration: 1.2,
-          ease: "power2.out",
+          duration: 1.5,
+          ease: "expo.out",
+          force3D: true,
           scrollTrigger: {
             trigger: portraitRef.current,
-            start: "top 90%",
+            start: "top 92%",
             toggleActions: "restart none none reverse"
           }
         }
@@ -288,7 +289,7 @@ function App() {
               })()}
             </div>
 
-            <div ref={portraitRef} className="w-full md:w-[55%] md:-mr-[10%] h-[50vh] md:h-[95vh] flex justify-center items-center relative z-20">
+            <div ref={portraitRef} className="w-full md:w-[55%] md:-mr-[10%] h-[50vh] md:h-[95vh] flex justify-center items-center relative z-20" style={{ willChange: 'transform, opacity' }}>
               <div className="relative w-full max-h-[95vh] aspect-[4/5] overflow-hidden">
                 <div
                   className="w-full h-full"
