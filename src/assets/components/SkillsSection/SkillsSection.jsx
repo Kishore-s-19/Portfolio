@@ -120,7 +120,7 @@ const SkillsSection = () => {
                         </h3>
                         <div className="skills-grid">
                             {category.skills.map((skill, skillIdx) => (
-                                <div key={skillIdx} className="skill-card">
+                                <div className="skill-card">
                                     <div className="skill-icon-wrapper" style={{ '--accent-color': category.color }}>
                                         <div className="skill-icon">{skill.icon}</div>
                                     </div>
@@ -129,7 +129,6 @@ const SkillsSection = () => {
                                         <span className="skill-level">{skill.level}</span>
                                         <p className="skill-desc">{skill.desc}</p>
                                     </div>
-                                    <div className="skill-card-glow" style={{ background: `radial-gradient(circle at center, ${category.color}22 0%, transparent 70%)` }}></div>
                                 </div>
                             ))}
                         </div>
