@@ -11,6 +11,10 @@ import { NaukriIcon } from './assets/components/LogoLoop/icon.jsx';
 
 // Import LogoLoop correctly from the new file
 import LogoLoop from './assets/components/LogoLoop/Logoloop.jsx';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const MemoFlowingMenu = memo(FlowingMenu);
 const MemoLogoLoop = memo(LogoLoop);
@@ -144,6 +148,32 @@ function App() {
     return () => observer.disconnect();
   }, [showAboutPage]);
 
+  // GSAP Scroll Reveal for About Text
+  useEffect(() => {
+    if (!showAboutPage) return;
+
+    const ctx = gsap.context(() => {
+      const words = gsap.utils.toArray('.reveal-word');
+
+      gsap.to(words, {
+        scrollTrigger: {
+          trigger: aboutPageRef.current,
+          start: 'top center',
+          end: 'bottom center',
+          scrub: true,
+        },
+        color: '#ffffff',
+        opacity: 1,
+        stagger: 0.1,
+      });
+
+      // Refresh ScrollTrigger after a short delay
+      setTimeout(() => ScrollTrigger.refresh(), 500);
+    }, aboutPageRef);
+
+    return () => ctx.revert();
+  }, [showAboutPage]);
+
   const handleLearnMoreClick = () => {
     setShowAboutPage(true);
     setTimeout(() => {
@@ -189,11 +219,15 @@ function App() {
         <div className="opacity-0 animate-fade-in fill-mode-forwards">
           <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef}>
             <div className="relative z-10 min-h-[90vh] flex flex-col md:flex-row items-center justify-between px-[5%] max-w-[1400px] mx-auto gap-10 font-commissioner">
-              <div className="flex-1 text-white text-[26px] leading-snug font-medium tracking-wide max-w-[500px] pt-32 pb-10">
+              <div className="flex-1 text-[26px] md:text-[32px] leading-snug font-medium tracking-wide max-w-[600px] pt-32 pb-10">
                 {aboutLines.map((line, i) => (
-                  line === "" ? <div key={i} className="h-6" /> : (
-                    <p key={i} className="mb-1 opacity-0 -translate-x-8 animate-slide-in" style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
-                      {line}
+                  line === "" ? <div key={i} className="h-8" /> : (
+                    <p key={i} className="mb-2 overflow-hidden">
+                      {line.split(' ').map((word, j) => (
+                        <span key={j} className="reveal-word inline-block mr-2 opacity-20 text-white/20 transition-colors duration-300">
+                          {word}
+                        </span>
+                      ))}
                     </p>
                   )
                 ))}
