@@ -57,7 +57,7 @@ const SkillsSection = () => {
             gsap.from(".skills-header", {
                 scrollTrigger: {
                     trigger: ".skills-header",
-                    start: "top 80%",
+                    start: "top 90%",
                 },
                 opacity: 0,
                 y: 30,
@@ -65,34 +65,42 @@ const SkillsSection = () => {
                 ease: "power3.out"
             });
 
-            // Category Animation
+            // Animate each category group
             skillCategories.forEach((_, idx) => {
-                const categorySelector = `.category-group-${idx}`;
+                const selector = `.category-group-${idx}`;
 
-                // Animate Category Header and Grid together
-                const tl = gsap.timeline({
+                // Animate the category container
+                gsap.from(selector, {
                     scrollTrigger: {
-                        trigger: categorySelector,
+                        trigger: selector,
                         start: "top 85%",
                         toggleActions: "play none none none"
-                    }
-                });
-
-                tl.from(categorySelector, {
+                    },
                     opacity: 0,
                     y: 40,
                     duration: 1,
                     ease: "power3.out"
-                })
-                    .from(`${categorySelector} .skill-card`, {
-                        opacity: 0,
-                        scale: 0.9,
-                        y: 20,
-                        stagger: 0.1,
-                        duration: 0.8,
-                        ease: "back.out(1.7)"
-                    }, "-=0.6");
+                });
+
+                // Animate the cards inside the category
+                gsap.from(`${selector} .skill-card`, {
+                    scrollTrigger: {
+                        trigger: selector,
+                        start: "top 85%",
+                    },
+                    opacity: 0,
+                    scale: 0.9,
+                    y: 20,
+                    stagger: 0.1,
+                    duration: 0.8,
+                    ease: "back.out(1.7)"
+                });
             });
+
+            // Refresh ScrollTrigger after a delay to ensure correct positioning
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 600);
         }, sectionRef);
 
         return () => ctx.revert();
