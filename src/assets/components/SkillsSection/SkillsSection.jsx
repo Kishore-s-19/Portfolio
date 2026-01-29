@@ -67,32 +67,31 @@ const SkillsSection = () => {
 
             // Category Animation
             skillCategories.forEach((_, idx) => {
-                gsap.from(`.category-group-${idx}`, {
+                const categorySelector = `.category-group-${idx}`;
+
+                // Animate Category Header and Grid together
+                const tl = gsap.timeline({
                     scrollTrigger: {
-                        trigger: `.category-group-${idx}`,
+                        trigger: categorySelector,
                         start: "top 85%",
-                    },
+                        toggleActions: "play none none none"
+                    }
+                });
+
+                tl.from(categorySelector, {
                     opacity: 0,
                     y: 40,
                     duration: 1,
-                    ease: "power3.out",
-                    delay: idx * 0.2
-                });
-
-                // Individual Cards Animation
-                gsap.from(`.category-group-${idx} .skill-card`, {
-                    scrollTrigger: {
-                        trigger: `.category-group-${idx}`,
-                        start: "top 85%",
-                    },
-                    opacity: 0,
-                    scale: 0.9,
-                    y: 20,
-                    stagger: 0.1,
-                    duration: 0.8,
-                    ease: "back.out(1.7)",
-                    delay: idx * 0.2 + 0.3
-                });
+                    ease: "power3.out"
+                })
+                    .from(`${categorySelector} .skill-card`, {
+                        opacity: 0,
+                        scale: 0.9,
+                        y: 20,
+                        stagger: 0.1,
+                        duration: 0.8,
+                        ease: "back.out(1.7)"
+                    }, "-=0.6");
             });
         }, sectionRef);
 

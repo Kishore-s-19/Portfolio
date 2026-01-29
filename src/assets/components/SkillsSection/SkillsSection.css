@@ -4,6 +4,8 @@
     color: #fff;
     overflow: hidden;
     position: relative;
+    z-index: 25;
+    /* Between FlowingMenu z-20 and Projects z-30 */
 }
 
 .skills-container {
