@@ -60,24 +60,18 @@
 }
 
 .skill-card {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    border: 2px solid #6366f1 !important;
-    /* Indigo border to be very obvious */
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 16px;
     padding: 30px 20px;
     width: 100%;
     max-width: 260px;
-    min-height: 220px;
     text-align: center;
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     will-change: transform, opacity;
-    display: block !important;
 }
 
 .skill-card:hover {

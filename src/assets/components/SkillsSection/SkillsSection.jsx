@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './SkillsSection.css';
 import {
-    FaReact, FaJs, FaHtml5, FaCss3Alt, FaJava, FaPython, FaGitAlt, FaGithub, FaAws
+    FaReact, FaJs, FaHtml5, FaCss3Alt, FaJava, FaPython, FaGitAlt, FaGithub, FaAws, FaFigma
 } from 'react-icons/fa';
 import {
     SiTailwindcss, SiSpringboot, SiMysql, SiVercel, SiPostman
@@ -19,9 +19,6 @@ const skillCategories = [
         skills: [
             { name: "React.js", level: "Advanced", desc: "Building modern SPAs with hooks and context", icon: <FaReact /> },
             { name: "JavaScript", level: "Advanced", desc: "ES6+, async programming, DOM manipulation", icon: <FaJs /> },
-            { name: "HTML5", level: "Advanced", desc: "Semantic HTML, accessibility, SEO", icon: <FaHtml5 /> },
-            { name: "CSS3", level: "Advanced", desc: "Flexbox, Grid, responsive design", icon: <FaCss3Alt /> },
-            { name: "Tailwind CSS", level: "Advanced", desc: "Utility-first CSS framework", icon: <SiTailwindcss /> },
         ]
     },
     {
@@ -38,6 +35,7 @@ const skillCategories = [
         title: "Tools & Technologies",
         color: "#a855f7", // Purple
         skills: [
+            { name: "Figma", level: "Intermediate", desc: "UI/UX design and prototyping", icon: <FaFigma /> },
             { name: "Git", level: "Intermediate", desc: "Version control, branching, collaboration", icon: <FaGitAlt /> },
             { name: "GitHub", level: "Intermediate", desc: "Code hosting, CI/CD, project management", icon: <FaGithub /> },
             { name: "AWS", level: "Intermediate", desc: "EC2, RDS, S3, cloud deployment", icon: <FaAws /> },
