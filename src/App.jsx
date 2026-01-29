@@ -7,10 +7,10 @@ import FlowingMenu from './assets/components/FlowingMenu';
 import SkillsSection from './assets/components/SkillsSection/SkillsSection';
 import { FaInstagram, FaLinkedin, FaGithub, FaFacebook, FaDiscord } from 'react-icons/fa';
 import { SiGmail } from 'react-icons/si';
-import { NaukriIcon } from './assets/components/LogoLoop/icon.jsx';
+import { NaukriIcon } from './assets/components/LogoLoop/Icon.jsx';
 
 // Import LogoLoop correctly from the new file
-import LogoLoop from './assets/components/LogoLoop/Logoloop.jsx';
+import LogoLoop from './assets/components/LogoLoop/LogoLoop.jsx';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
