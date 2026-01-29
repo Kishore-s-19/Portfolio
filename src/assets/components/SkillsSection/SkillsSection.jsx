@@ -15,15 +15,15 @@ gsap.registerPlugin(ScrollTrigger);
 const skillCategories = [
     {
         title: "Tools & Technologies",
-        color: "#6366f1", // Using Indigo for icons again for contrast on white cards
+        color: "#ffffff", // Heading color remains white
         skills: [
-            { name: "Figma", level: "Intermediate", desc: "UI/UX design and prototyping", icon: <FaFigma /> },
-            { name: "Git", level: "Intermediate", desc: "Version control, branching, collaboration", icon: <FaGitAlt /> },
-            { name: "GitHub", level: "Intermediate", desc: "Code hosting, CI/CD, project management", icon: <FaGithub /> },
-            { name: "AWS", level: "Intermediate", desc: "EC2, RDS, S3, cloud deployment", icon: <FaAws /> },
-            { name: "Vercel", level: "Intermediate", desc: "Frontend deployment, serverless functions", icon: <SiVercel /> },
-            { name: "Postman", level: "Intermediate", desc: "API testing and documentation", icon: <SiPostman /> },
-            { name: "VS Code", level: "Advanced", desc: "Primary IDE with custom setup", icon: <VscVscode /> },
+            { name: "Figma", level: "Intermediate", desc: "UI/UX design and prototyping", icon: <FaFigma />, brandColor: "#F24E1E" },
+            { name: "Git", level: "Intermediate", desc: "Version control, branching, collaboration", icon: <FaGitAlt />, brandColor: "#F05032" },
+            { name: "GitHub", level: "Intermediate", desc: "Code hosting, CI/CD, project management", icon: <FaGithub />, brandColor: "#333333" },
+            { name: "AWS", level: "Intermediate", desc: "EC2, RDS, S3, cloud deployment", icon: <FaAws />, brandColor: "#FF9900" },
+            { name: "Vercel", level: "Intermediate", desc: "Frontend deployment, serverless functions", icon: <SiVercel />, brandColor: "#000000" },
+            { name: "Postman", level: "Intermediate", desc: "API testing and documentation", icon: <SiPostman />, brandColor: "#FF6C37" },
+            { name: "VS Code", level: "Advanced", desc: "Primary IDE with custom setup", icon: <VscVscode />, brandColor: "#007ACC" },
         ]
     }
 ];
@@ -53,27 +53,29 @@ const SkillsSection = () => {
                 gsap.from(selector, {
                     scrollTrigger: {
                         trigger: selector,
-                        start: "top 90%",
+                        start: "top 95%",
                     },
                     opacity: 0,
                     y: 20,
                     duration: 0.8,
-                    ease: "power3.out"
+                    ease: "power3.out",
+                    clearProps: "all"
                 });
 
                 // Animate cards with stagger
                 gsap.from(`${selector} .skill-card`, {
                     scrollTrigger: {
                         trigger: selector,
-                        start: "top 90%",
+                        start: "top 95%",
                     },
                     opacity: 0,
-                    y: 30,
-                    scale: 0.95,
+                    y: 40,
+                    scale: 0.9,
                     stagger: 0.1,
-                    duration: 0.6,
-                    ease: "power2.out",
-                    delay: 0.2
+                    duration: 1,
+                    ease: "power4.out",
+                    clearProps: "all",
+                    delay: 0.1
                 });
             });
 
@@ -106,7 +108,7 @@ const SkillsSection = () => {
                         <div className="skills-grid">
                             {category.skills.map((skill, skillIdx) => (
                                 <div key={skillIdx} className="skill-card">
-                                    <div className="skill-icon-wrapper" style={{ '--accent-color': category.color }}>
+                                    <div className="skill-icon-wrapper" style={{ '--accent-color': skill.brandColor }}>
                                         <div className="skill-icon">{skill.icon}</div>
                                     </div>
                                     <div className="skill-info">

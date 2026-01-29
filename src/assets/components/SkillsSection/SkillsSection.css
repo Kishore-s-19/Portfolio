@@ -65,7 +65,7 @@
 }
 
 .skill-card {
-    background: #ffffff;
+    background: #ffffff !important;
     border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 16px;
     padding: 30px 20px;
@@ -81,6 +81,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .skill-card:hover {
