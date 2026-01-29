@@ -99,6 +99,7 @@ const aboutLines = [
 function App() {
   const [showAboutPage, setShowAboutPage] = useState(false);
   const aboutPageRef = useRef(null);
+  const aboutTextRef = useRef(null);
   const projectsRef = useRef(null);
   const contactRef = useRef(null);
   const landingRef = useRef(null);
@@ -157,10 +158,10 @@ function App() {
 
       gsap.to(letters, {
         scrollTrigger: {
-          trigger: aboutPageRef.current,
-          start: 'top 70%',
-          end: 'bottom 30%',
-          scrub: 1, // Smoother scrub
+          trigger: aboutTextRef.current,
+          start: 'top 80%',
+          end: 'bottom 40%',
+          scrub: 1,
         },
         color: '#ffffff',
         duration: 0.1,
@@ -220,7 +221,7 @@ function App() {
         <div className="opacity-0 animate-fade-in fill-mode-forwards">
           <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef}>
             <div className="relative z-10 min-h-[90vh] flex flex-col md:flex-row items-center justify-between px-[5%] max-w-[1400px] mx-auto gap-10 font-commissioner">
-              <div className="flex-1 text-[26px] leading-snug font-medium tracking-wide max-w-[500px] pt-32 pb-10">
+              <div ref={aboutTextRef} className="flex-1 text-[26px] leading-snug font-medium tracking-wide max-w-[500px] pt-32 pb-10">
                 {aboutLines.map((line, i) => (
                   line === "" ? <div key={i} className="h-6" /> : (
                     <p key={i} className="mb-1">
