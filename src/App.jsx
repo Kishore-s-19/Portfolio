@@ -220,8 +220,8 @@ function App() {
       {showAboutPage && (
         <div className="opacity-0 animate-fade-in fill-mode-forwards">
           <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef}>
-            <div className="relative z-10 min-h-[90vh] flex flex-col md:flex-row items-center justify-between px-[5%] max-w-[1400px] mx-auto gap-10 font-helvetica font-bold">
-              <div ref={aboutTextRef} className="flex-1 text-[45px] leading-tight tracking-tight max-w-[950px] pt-32 pb-10">
+            <div className="relative z-10 min-h-screen flex flex-col md:flex-row items-center w-full px-[5%] font-helvetica font-bold overflow-hidden">
+              <div ref={aboutTextRef} className="w-full md:w-[60%] text-[45px] leading-tight tracking-tight pt-32 pb-10 pr-[5%]">
                 {(() => {
                   const paragraphs = [];
                   let currentPara = [];
@@ -238,7 +238,7 @@ function App() {
 
                   return paragraphs.map((para, i) => (
                     para === "" ? <div key={i} className="h-6" /> : (
-                      <p key={i} className="mb-2">
+                      <p key={i} className="mb-4">
                         {para.join(' ').split(' ').map((word, wordIdx) => (
                           <span key={wordIdx} className="inline-block whitespace-nowrap mr-[0.25em]">
                             {word.split('').map((char, charIdx) => (
@@ -254,8 +254,8 @@ function App() {
                 })()}
               </div>
 
-              <div className="w-full md:w-3/5 h-[90vh] flex justify-center items-center opacity-0 translate-x-24 scale-95 animate-portrait-in fill-mode-forwards relative">
-                <div className="relative w-full max-h-[90vh] aspect-[4/5] overflow-hidden md:translate-x-12">
+              <div className="w-full md:w-[40%] h-[90vh] flex justify-center items-center opacity-0 translate-x-12 scale-95 animate-portrait-in fill-mode-forwards relative z-20">
+                <div className="relative w-full max-h-[80vh] aspect-[4/5] overflow-hidden">
                   <div
                     className="w-full h-full"
                     style={{
