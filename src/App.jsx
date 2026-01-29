@@ -200,7 +200,7 @@ function App() {
   return (
     <div className="w-full min-h-screen relative overflow-x-hidden bg-black font-commissioner">
       {/* Main Landing Page */}
-      <section className="w-screen h-screen relative transition-opacity duration-700 overflow-hidden font-outfit" ref={landingRef}>
+      <section className="w-full h-screen relative transition-opacity duration-700 overflow-hidden font-outfit" ref={landingRef}>
         <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
           {useShaderBackground && isLandingVisible ? <PaperShaderBackground /> : (
             <div className="absolute inset-0 w-full h-full bg-black bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,255,255,0.15)_0%,transparent_40%),radial-gradient(ellipse_at_80%_80%,rgba(255,255,255,0.12)_0%,transparent_40%),radial-gradient(ellipse_at_40%_20%,rgba(255,255,255,0.1)_0%,transparent_40%)] animate-pulse" />
@@ -292,7 +292,7 @@ function App() {
           Back to Top
         </button>
 
-        <section className="w-screen py-10 relative bg-black z-20">
+        <section className="w-full py-10 relative bg-black z-20">
           <MemoFlowingMenu items={menuItems} />
         </section>
 
@@ -376,7 +376,7 @@ function App() {
 
         {/* Signature Footer */}
         <section className="w-full pt-20 pb-0 bg-black flex justify-center items-center overflow-hidden select-none">
-          <h1 className="font-apple font-bold text-[25vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
+          <h1 className="font-apple font-bold text-[12vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
             Kishore
           </h1>
         </section>
