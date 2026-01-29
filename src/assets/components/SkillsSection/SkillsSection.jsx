@@ -4,7 +4,7 @@ import {
     FaGitAlt, FaGithub, FaAws, FaFigma
 } from 'react-icons/fa';
 import {
-    SiVercel, SiPostman
+    SiVercel, SiPostman, SiRailway, SiRender, SiAdobepremierepro
 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 import gsap from 'gsap';
@@ -18,6 +18,9 @@ const skillCategories = [
         color: "#ffffff", // Heading color remains white
         skills: [
             { name: "Figma", level: "Intermediate", desc: "UI/UX design and prototyping", icon: <FaFigma />, brandColor: "#F24E1E" },
+            { name: "Railway", level: "Intermediate", desc: "Cloud infrastructure and hosting", icon: <SiRailway />, brandColor: "#0B0D0E" },
+            { name: "Render", level: "Intermediate", desc: "Cloud platform for modern web apps", icon: <SiRender />, brandColor: "#46E3B7" },
+            { name: "Adobe Premiere Pro", level: "Advanced", desc: "Professional video editing", icon: <SiAdobepremierepro />, brandColor: "#9999FF" },
             { name: "Git", level: "Intermediate", desc: "Version control, branching, collaboration", icon: <FaGitAlt />, brandColor: "#F05032" },
             { name: "GitHub", level: "Intermediate", desc: "Code hosting, CI/CD, project management", icon: <FaGithub />, brandColor: "#333333" },
             { name: "AWS", level: "Intermediate", desc: "EC2, RDS, S3, cloud deployment", icon: <FaAws />, brandColor: "#FF9900" },
