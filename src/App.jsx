@@ -80,7 +80,7 @@ const projectsData = [
 const contactLogos = [
   { node: <FaInstagram style={{ color: '#E4405F', fontSize: '64px' }} />, title: "Instagram", href: "https://www.instagram.com/kishoree._.21/", ariaLabel: "Instagram Profile" },
   { node: <FaLinkedin style={{ color: '#0A66C2', fontSize: '64px' }} />, title: "LinkedIn", href: "https://www.linkedin.com/in/kishore-s-20a861224/", ariaLabel: "LinkedIn Profile" },
-  { node: <SiGmail style={{ color: '#EA4335', fontSize: '64px' }} />, title: "Gmail", href: "mailto:youremail@gmail.com", ariaLabel: "Send Email" },
+  { node: <SiGmail style={{ color: '#EA4335', fontSize: '64px' }} />, title: "Gmail", href: "mailto:kdkishore315@gmail.com", ariaLabel: "Send Email" },
   { node: <FaGithub style={{ color: '#FFFFFF', fontSize: '64px' }} />, title: "GitHub", href: "https://github.com/Kishore-s-19", ariaLabel: "GitHub Profile" },
   { node: <NaukriIcon style={{ color: '#0B9B4D', fontSize: '64px' }} />, title: "Naukri", href: "https://www.naukri.com/mnjuser/profile?id=&altresid", ariaLabel: "Naukri Profile" },
   { node: <FaFacebook style={{ color: '#1877F2', fontSize: '64px' }} />, title: "Facebook", href: "https://www.facebook.com/kishore.75945/", ariaLabel: "Facebook Profile" },
