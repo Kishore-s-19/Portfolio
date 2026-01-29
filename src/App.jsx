@@ -221,7 +221,7 @@ function App() {
         <div className="opacity-0 animate-fade-in fill-mode-forwards">
           <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef}>
             <div className="relative z-10 min-h-[90vh] flex flex-col md:flex-row items-center justify-between px-[5%] max-w-[1400px] mx-auto gap-10 font-helvetica font-bold">
-              <div ref={aboutTextRef} className="flex-1 text-[32px] leading-tight tracking-tight max-w-[950px] pt-32 pb-10">
+              <div ref={aboutTextRef} className="flex-1 text-[38px] leading-tight tracking-tight max-w-[950px] pt-32 pb-10">
                 {(() => {
                   const paragraphs = [];
                   let currentPara = [];
