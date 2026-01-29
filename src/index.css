@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-commissioner: "CommissionerLoud", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-outfit: "Outfit", sans-serif;
+  --ease-luxury: cubic-bezier(0.83, 0, 0.17, 1);
+
+  --animate-bounce-slow: bounce-slow 5s ease-in-out infinite;
+  --animate-slide-in: slide-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  --animate-portrait-in: portrait-in 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  --animate-fade-in: fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+  @keyframes bounce-slow {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+
+    to {
+      opacity: 0.9;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes portrait-in {
+    from {
+      opacity: 0;
+      transform: translateX(100px) scale(0.9);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+
+@font-face {
+  font-family: 'CommissionerLoud';
+  src: url('./assets/fonts/otfs/CommissionerLoud-Bold.otf') format('opentype');
+}
+
+:root {
+  font-family: var(--font-commissioner);
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #000;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: #000;
+  overflow-x: hidden;
+}

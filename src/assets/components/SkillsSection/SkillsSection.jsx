@@ -1,0 +1,138 @@
+import React, { useEffect, useRef } from 'react';
+import './SkillsSection.css';
+import {
+    FaReact, FaJs, FaHtml5, FaCss3Alt, FaJava, FaPython, FaGitAlt, FaGithub, FaAws
+} from 'react-icons/fa';
+import {
+    SiTailwindcss, SiSpringboot, SiMysql, SiVercel, SiPostman
+} from 'react-icons/si';
+import { VscVscode } from 'react-icons/vsc';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const skillCategories = [
+    {
+        title: "Frontend Development",
+        color: "#3b82f6", // Blue
+        skills: [
+            { name: "React.js", level: "Advanced", desc: "Building modern SPAs with hooks and context", icon: <FaReact /> },
+            { name: "JavaScript", level: "Advanced", desc: "ES6+, async programming, DOM manipulation", icon: <FaJs /> },
+            { name: "HTML5", level: "Advanced", desc: "Semantic HTML, accessibility, SEO", icon: <FaHtml5 /> },
+            { name: "CSS3", level: "Advanced", desc: "Flexbox, Grid, responsive design", icon: <FaCss3Alt /> },
+            { name: "Tailwind CSS", level: "Advanced", desc: "Utility-first CSS framework", icon: <SiTailwindcss /> },
+        ]
+    },
+    {
+        title: "Backend Development",
+        color: "#10b981", // Emerald
+        skills: [
+            { name: "Java", level: "Advanced", desc: "OOP, collections, streams, multi-threading", icon: <FaJava /> },
+            { name: "Spring Boot", level: "Intermediate", desc: "REST APIs, JPA, security, microservices", icon: <SiSpringboot /> },
+            { name: "MySQL", level: "Intermediate", desc: "Database design, queries, optimization", icon: <SiMysql /> },
+            { name: "Python", level: "Intermediate", desc: "Data analysis, scripting, automation", icon: <FaPython /> },
+        ]
+    },
+    {
+        title: "Tools & Technologies",
+        color: "#a855f7", // Purple
+        skills: [
+            { name: "Git", level: "Intermediate", desc: "Version control, branching, collaboration", icon: <FaGitAlt /> },
+            { name: "GitHub", level: "Intermediate", desc: "Code hosting, CI/CD, project management", icon: <FaGithub /> },
+            { name: "AWS", level: "Intermediate", desc: "EC2, RDS, S3, cloud deployment", icon: <FaAws /> },
+            { name: "Vercel", level: "Intermediate", desc: "Frontend deployment, serverless functions", icon: <SiVercel /> },
+            { name: "Postman", level: "Intermediate", desc: "API testing and documentation", icon: <SiPostman /> },
+            { name: "VS Code", level: "Advanced", desc: "Primary IDE with custom setup", icon: <VscVscode /> },
+        ]
+    }
+];
+
+const SkillsSection = () => {
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            // Header Animation
+            gsap.from(".skills-header", {
+                scrollTrigger: {
+                    trigger: ".skills-header",
+                    start: "top 80%",
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+
+            // Category Animation
+            skillCategories.forEach((_, idx) => {
+                gsap.from(`.category-group-${idx}`, {
+                    scrollTrigger: {
+                        trigger: `.category-group-${idx}`,
+                        start: "top 85%",
+                    },
+                    opacity: 0,
+                    y: 40,
+                    duration: 1,
+                    ease: "power3.out",
+                    delay: idx * 0.2
+                });
+
+                // Individual Cards Animation
+                gsap.from(`.category-group-${idx} .skill-card`, {
+                    scrollTrigger: {
+                        trigger: `.category-group-${idx}`,
+                        start: "top 85%",
+                    },
+                    opacity: 0,
+                    scale: 0.9,
+                    y: 20,
+                    stagger: 0.1,
+                    duration: 0.8,
+                    ease: "back.out(1.7)",
+                    delay: idx * 0.2 + 0.3
+                });
+            });
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
+
+    return (
+        <section className="skills-section font-outfit" ref={sectionRef}>
+            <div className="skills-container">
+                <div className="skills-header">
+                    <h2 className="skills-title">Technical Skills</h2>
+                    <p className="skills-subtitle">Technologies and tools I work with</p>
+                    <div className="skills-underline"></div>
+                </div>
+
+                {skillCategories.map((category, catIdx) => (
+                    <div key={catIdx} className={`skills-category category-group-${catIdx}`}>
+                        <h3 className="category-title" style={{ color: category.color }}>
+                            {category.title}
+                        </h3>
+                        <div className="skills-grid">
+                            {category.skills.map((skill, skillIdx) => (
+                                <div key={skillIdx} className="skill-card">
+                                    <div className="skill-icon-wrapper" style={{ '--accent-color': category.color }}>
+                                        <div className="skill-icon">{skill.icon}</div>
+                                    </div>
+                                    <div className="skill-info">
+                                        <h4 className="skill-name">{skill.name}</h4>
+                                        <span className="skill-level">{skill.level}</span>
+                                        <p className="skill-desc">{skill.desc}</p>
+                                    </div>
+                                    <div className="skill-card-glow" style={{ background: `radial-gradient(circle at center, ${category.color}22 0%, transparent 70%)` }}></div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+};
+
+export default SkillsSection;

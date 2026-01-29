@@ -1,0 +1,252 @@
+/* ROOT */
+.logoloop {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 140px;   /* 🔥 INCREASE THIS */
+  display: flex;
+  align-items: center;
+  padding: 24px 0;
+}
+
+/* TRACK */
+.logoloop__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+}
+
+/* LIST */
+.logoloop__list {
+  display: flex;
+  align-items: center;
+  gap: var(--logoloop-gap);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  /* Prevent logo collision */
+  min-width: max-content;
+}
+
+/* ITEM */
+.logoloop__item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Prevent overlapping */
+  position: relative;
+  z-index: 1;
+  /* Ensure proper spacing */
+  min-width: fit-content;
+}
+
+/* NODE (React Icons etc.) */
+.logoloop__node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--logoloop-logoHeight);
+  width: auto;
+  /* Prevent icon collision */
+  flex-shrink: 0;
+}
+
+/* LINKS */
+.logoloop__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* SCALE ON HOVER */
+.logoloop--scale-hover .logoloop__item {
+  transition: transform 0.3s ease;
+}
+.logoloop--scale-hover .logoloop__item:hover {
+  transform: scale(1.12);
+}
+
+/* ----------------------------- */
+/* 🔥 HARD-CLAMPED EDGE FADES 🔥 */
+/* ----------------------------- */
+
+.logoloop--fade::before,
+.logoloop--fade::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 160px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* LEFT FADE — EXACT EDGE */
+.logoloop--fade::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    var(--logoloop-fadeColor, #000) 0%,
+    var(--logoloop-fadeColor, #000) 25%,
+    rgba(0, 0, 0, 0.8) 50%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* RIGHT FADE — EXACT EDGE */
+.logoloop--fade::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    var(--logoloop-fadeColor, #000) 0%,
+    var(--logoloop-fadeColor, #000) 25%,
+    rgba(0, 0, 0, 0.8) 50%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* ----------------------------- */
+/* VERTICAL MODE SUPPORT */
+/* ----------------------------- */
+
+.logoloop--vertical .logoloop__track {
+  flex-direction: column;
+}
+
+.logoloop--vertical .logoloop__list {
+  flex-direction: column;
+}
+
+.logoloop--vertical.logoloop--fade::before,
+.logoloop--vertical.logoloop--fade::after {
+  width: 100%;
+  height: 120px;
+  left: 0;
+}
+
+.logoloop--vertical.logoloop--fade::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--logoloop-fadeColor, #000) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.logoloop--vertical.logoloop--fade::after {
+  bottom: 0;
+  top: auto;
+  background: linear-gradient(
+    to top,
+    var(--logoloop-fadeColor, #000) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* GAP AT LOOP BOUNDARY */
+.logoloop__list {
+  padding-right: var(--logoloop-gap);
+  /* Ensure proper spacing between copies */
+  margin-right: 0;
+}
+/* FORCE BLACK & WHITE THEME */
+.logoloop__item,
+.logoloop__node,
+.logoloop__item img,
+.logoloop__item svg {
+  filter: grayscale(100%) brightness(1.1);
+  opacity: 0.85;
+  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* OPTIONAL: SLIGHT EMPHASIS ON HOVER */
+.logoloop__item:hover {
+  opacity: 1;
+  filter: grayscale(100%) brightness(1.25);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .logoloop {
+    min-height: 100px;
+    padding: 20px 0;
+    /* Ensure proper container width */
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+  }
+
+  .logoloop__track {
+    /* Prevent track overflow */
+    min-width: max-content;
+  }
+
+  .logoloop__list {
+    /* Ensure minimum gap on mobile */
+    gap: max(var(--logoloop-gap), 32px);
+  }
+
+  .logoloop__item {
+    /* Prevent item shrinking on mobile */
+    flex-shrink: 0;
+    min-width: auto;
+  }
+
+  .logoloop--fade::before,
+  .logoloop--fade::after {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logoloop {
+    min-height: 90px;
+    padding: 16px 0;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .logoloop__list {
+    /* Ensure minimum gap on small mobile */
+    gap: max(var(--logoloop-gap), 24px);
+  }
+
+  .logoloop__item {
+    /* Ensure icons don't overlap */
+    margin: 0;
+    padding: 0;
+  }
+
+  .logoloop__node {
+    /* Ensure proper icon sizing */
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .logoloop--fade::before,
+  .logoloop--fade::after {
+    width: 60px;
+  }
+}
+
+@media (max-width: 360px) {
+  .logoloop {
+    min-height: 80px;
+    padding: 12px 0;
+  }
+
+  .logoloop__list {
+    gap: max(var(--logoloop-gap), 20px);
+  }
+
+  .logoloop--fade::before,
+  .logoloop--fade::after {
+    width: 50px;
+  }
+}
+
