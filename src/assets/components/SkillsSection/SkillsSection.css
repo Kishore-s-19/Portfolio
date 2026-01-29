@@ -72,6 +72,7 @@
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(10px);
+    will-change: transform, opacity;
 }
 
 .skill-card:hover {

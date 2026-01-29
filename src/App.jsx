@@ -97,8 +97,10 @@ function App() {
   const aboutPageRef = useRef(null);
   const projectsRef = useRef(null);
   const contactRef = useRef(null);
+  const landingRef = useRef(null);
   const [isProjectsVisible, setIsProjectsVisible] = useState(false);
   const [isContactVisible, setIsContactVisible] = useState(false);
+  const [isLandingVisible, setIsLandingVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [useShaderBackground, setUseShaderBackground] = useState(true);
 
@@ -126,12 +128,15 @@ function App() {
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
+          if (entry.target === landingRef.current) setIsLandingVisible(entry.isIntersecting);
           if (entry.target === projectsRef.current && entry.isIntersecting) setIsProjectsVisible(true);
           if (entry.target === contactRef.current && entry.isIntersecting) setIsContactVisible(true);
         });
       },
       { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
     );
+
+    landingRef.current && observer.observe(landingRef.current);
 
     projectsRef.current && observer.observe(projectsRef.current);
     contactRef.current && observer.observe(contactRef.current);
@@ -158,9 +163,9 @@ function App() {
   return (
     <div className="w-full min-h-screen relative overflow-x-hidden bg-black font-commissioner">
       {/* Main Landing Page */}
-      <section className="w-screen h-screen relative transition-opacity duration-700 overflow-hidden font-outfit">
+      <section className="w-screen h-screen relative transition-opacity duration-700 overflow-hidden font-outfit" ref={landingRef}>
         <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
-          {useShaderBackground ? <PaperShaderBackground /> : (
+          {useShaderBackground && isLandingVisible ? <PaperShaderBackground /> : (
             <div className="absolute inset-0 w-full h-full bg-black bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,255,255,0.15)_0%,transparent_40%),radial-gradient(ellipse_at_80%_80%,rgba(255,255,255,0.12)_0%,transparent_40%),radial-gradient(ellipse_at_40%_20%,rgba(255,255,255,0.1)_0%,transparent_40%)] animate-pulse" />
           )}
         </div>
@@ -199,10 +204,9 @@ function App() {
                   <div
                     className="w-full h-full"
                     style={{
-                      maskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%), linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)',
-                      WebkitMaskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%), linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)',
-                      maskComposite: 'intersect',
-                      WebkitMaskComposite: 'source-in'
+                      maskImage: 'radial-gradient(circle at center, black 40%, transparent 85%)',
+                      WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 85%)',
+                      willChange: 'transform'
                     }}
                   >
                     <img src={portraitImage} alt="Portrait" className="w-full h-full object-cover grayscale brightness-90 contrast-110 transition-all duration-700 hover:scale-105" />
