@@ -209,7 +209,7 @@ function App() {
 
         <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-white pointer-events-none">
           <div className="text-center flex flex-col items-center gap-10 pointer-events-auto">
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight m-0 bg-white bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-7xl font-bold leading-tight m-0 bg-white bg-clip-text text-transparent">
               Kishore S<br />Portfolio
             </h1>
             <div className="flex flex-col md:flex-row gap-6">
@@ -233,7 +233,7 @@ function App() {
       <div className="opacity-0 animate-fade-in fill-mode-forwards">
         <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef}>
           <div className="relative z-10 min-h-screen flex flex-col md:flex-row items-center w-full px-[5%] font-helvetica font-bold overflow-hidden">
-            <div ref={aboutTextRef} className="w-full md:w-[55%] shrink-0 text-[45px] leading-tight tracking-tight pt-32 pb-10">
+            <div ref={aboutTextRef} className="w-full md:w-[55%] shrink-0 text-[28px] md:text-[45px] leading-tight tracking-tight pt-32 pb-10">
               {(() => {
                 const paragraphs = [];
                 let currentPara = [];
@@ -266,7 +266,7 @@ function App() {
               })()}
             </div>
 
-            <div className="w-full md:w-[55%] md:-mr-[10%] h-[95vh] flex justify-center items-center opacity-0 translate-x-12 scale-95 animate-portrait-in fill-mode-forwards relative z-20">
+            <div className="w-full md:w-[55%] md:-mr-[10%] h-[50vh] md:h-[95vh] flex justify-center items-center opacity-0 translate-x-12 scale-95 animate-portrait-in fill-mode-forwards relative z-20">
               <div className="relative w-full max-h-[95vh] aspect-[4/5] overflow-hidden">
                 <div
                   className="w-full h-full"
@@ -286,7 +286,7 @@ function App() {
         </section>
 
         <button
-          className={`fixed bottom-10 right-10 bg-white/10 border-2 border-gray-400/70 text-gray-400/70 py-3 px-8 rounded-full text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-md z-[9999] ${showBackToTopButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+          className={`fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-white/10 border-2 border-gray-400/70 text-gray-400/70 py-3 px-6 md:px-8 rounded-full text-sm md:text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-md z-[9999] ${showBackToTopButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
           onClick={handleBackToTop}
         >
           Back to Top
@@ -301,7 +301,7 @@ function App() {
         <section className="w-full min-h-screen relative bg-black px-[5%] py-10 z-30 font-outfit" ref={projectsRef}>
           <div className="max-w-[1400px] mx-auto">
             <div className={`transition-all duration-1000 transform ${isProjectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} mb-10`}>
-              <h2 className="text-6xl text-white mb-5 bg-white bg-clip-text text-transparent tracking-wider font-bold">Featured Work</h2>
+              <h2 className="text-4xl md:text-6xl text-white mb-5 bg-white bg-clip-text text-transparent tracking-wider font-bold">Featured Work</h2>
               <p className="text-white/80 text-xl leading-relaxed max-w-3xl">
                 A showcase of my recent projects demonstrating expertise in full-stack,
                 digital creation, modular design, and scalable system solutions.
@@ -344,7 +344,7 @@ function App() {
         <section className="w-full min-h-[80vh] px-[5%] py-10 bg-black relative z-40 font-outfit" ref={contactRef}>
           <div className="max-w-[1400px] mx-auto text-center">
             <div className={`transition-all duration-800 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} mb-10`}>
-              <h2 className="text-5xl md:text-6xl text-white mb-5 bg-white bg-clip-text text-transparent font-bold">Connect With Me</h2>
+              <h2 className="text-4xl md:text-6xl text-white mb-5 bg-white bg-clip-text text-transparent font-bold">Connect With Me</h2>
               <p className="text-white/70 text-lg leading-relaxed max-w-xl mx-auto">
                 Feel free to reach out through any of these platforms.
               </p>
@@ -376,7 +376,7 @@ function App() {
 
         {/* Signature Footer */}
         <section className="w-full pt-20 pb-0 bg-black flex justify-center items-center overflow-hidden select-none">
-          <h1 className="font-apple font-bold text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
+          <h1 className="font-apple font-bold text-[25vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
             Kishore
           </h1>
         </section>
