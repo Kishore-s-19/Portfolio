@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import './SkillsSection.css';
 import {
-    FaReact, FaJs, FaHtml5, FaCss3Alt, FaJava, FaPython, FaGitAlt, FaGithub, FaAws, FaFigma
+    FaGitAlt, FaGithub, FaAws, FaFigma
 } from 'react-icons/fa';
 import {
-    SiTailwindcss, SiSpringboot, SiMysql, SiVercel, SiPostman
+    SiVercel, SiPostman
 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 import gsap from 'gsap';
@@ -14,26 +14,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const skillCategories = [
     {
-        title: "Frontend Development",
-        color: "#3b82f6", // Blue
-        skills: [
-            { name: "React.js", level: "Advanced", desc: "Building modern SPAs with hooks and context", icon: <FaReact /> },
-            { name: "JavaScript", level: "Advanced", desc: "ES6+, async programming, DOM manipulation", icon: <FaJs /> },
-        ]
-    },
-    {
-        title: "Backend Development",
-        color: "#10b981", // Emerald
-        skills: [
-            { name: "Java", level: "Advanced", desc: "OOP, collections, streams, multi-threading", icon: <FaJava /> },
-            { name: "Spring Boot", level: "Intermediate", desc: "REST APIs, JPA, security, microservices", icon: <SiSpringboot /> },
-            { name: "MySQL", level: "Intermediate", desc: "Database design, queries, optimization", icon: <SiMysql /> },
-            { name: "Python", level: "Intermediate", desc: "Data analysis, scripting, automation", icon: <FaPython /> },
-        ]
-    },
-    {
         title: "Tools & Technologies",
-        color: "#a855f7", // Purple
+        color: "#6366f1", // Using the primary Indigo color
         skills: [
             { name: "Figma", level: "Intermediate", desc: "UI/UX design and prototyping", icon: <FaFigma /> },
             { name: "Git", level: "Intermediate", desc: "Version control, branching, collaboration", icon: <FaGitAlt /> },
