@@ -15,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 const skillCategories = [
     {
         title: "Tools & Technologies",
-        color: "#6366f1", // Using the primary Indigo color
+        color: "#ffffff", // Changed to white per user request
         skills: [
             { name: "Figma", level: "Intermediate", desc: "UI/UX design and prototyping", icon: <FaFigma /> },
             { name: "Git", level: "Intermediate", desc: "Version control, branching, collaboration", icon: <FaGitAlt /> },
