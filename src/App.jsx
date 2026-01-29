@@ -153,18 +153,18 @@ function App() {
     if (!showAboutPage) return;
 
     const ctx = gsap.context(() => {
-      const words = gsap.utils.toArray('.reveal-word');
+      const letters = gsap.utils.toArray('.reveal-char');
 
-      gsap.to(words, {
+      gsap.to(letters, {
         scrollTrigger: {
           trigger: aboutPageRef.current,
           start: 'top center',
-          end: 'bottom center',
+          end: 'bottom 20%',
           scrub: true,
         },
         color: '#ffffff',
         opacity: 1,
-        stagger: 0.1,
+        stagger: 0.05,
       });
 
       // Refresh ScrollTrigger after a short delay
@@ -222,10 +222,10 @@ function App() {
               <div className="flex-1 text-[26px] md:text-[32px] leading-snug font-medium tracking-wide max-w-[600px] pt-32 pb-10">
                 {aboutLines.map((line, i) => (
                   line === "" ? <div key={i} className="h-8" /> : (
-                    <p key={i} className="mb-2 overflow-hidden">
-                      {line.split(' ').map((word, j) => (
-                        <span key={j} className="reveal-word inline-block mr-2 opacity-20 text-white/20 transition-colors duration-300">
-                          {word}
+                    <p key={i} className="mb-2">
+                      {line.split('').map((char, j) => (
+                        <span key={j} className="reveal-char inline-block opacity-100 text-[#555555] transition-colors duration-200">
+                          {char === ' ' ? '\u00A0' : char}
                         </span>
                       ))}
                     </p>
