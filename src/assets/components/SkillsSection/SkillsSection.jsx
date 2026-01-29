@@ -84,7 +84,7 @@ const SkillsSection = () => {
                 gsap.from(`${selector} .skill-card`, {
                     scrollTrigger: {
                         trigger: selector,
-                        start: "top 85%",
+                        start: "top 95%",
                     },
                     opacity: 0,
                     scale: 0.9,
@@ -94,6 +94,9 @@ const SkillsSection = () => {
                     ease: "back.out(1.7)"
                 });
             });
+
+            // Double check refresh
+            ScrollTrigger.refresh();
 
             // Refresh ScrollTrigger after a delay to ensure correct positioning
             setTimeout(() => {
