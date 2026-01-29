@@ -220,7 +220,7 @@ function App() {
       {showAboutPage && (
         <div className="opacity-0 animate-fade-in fill-mode-forwards">
           <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef}>
-            <div className="relative z-10 min-h-[90vh] flex flex-col md:flex-row items-center justify-between px-[5%] max-w-[1400px] mx-auto gap-10 font-outfit">
+            <div className="relative z-10 min-h-[90vh] flex flex-col md:flex-row items-center justify-between px-[5%] max-w-[1400px] mx-auto gap-10 font-helvetica font-bold">
               <div ref={aboutTextRef} className="flex-1 text-[26px] leading-snug font-medium tracking-wide max-w-[500px] pt-32 pb-10">
                 {aboutLines.map((line, i) => (
                   line === "" ? <div key={i} className="h-6" /> : (
