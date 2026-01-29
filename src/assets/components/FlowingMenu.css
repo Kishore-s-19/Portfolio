@@ -44,7 +44,7 @@
 
 @media (max-width: 768px) {
   .menu-wrap {
-    height: 120%;
+    height: auto;
     margin-top: 40px;
   }
 

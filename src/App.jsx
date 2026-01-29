@@ -266,7 +266,7 @@ function App() {
               })()}
             </div>
 
-            <div className="w-full md:w-[55%] md:-mr-[10%] h-[50vh] md:h-[95vh] flex justify-center items-center opacity-0 translate-x-12 scale-95 animate-portrait-in fill-mode-forwards relative z-20">
+            <div className="w-full md:w-[55%] md:-mr-[10%] h-[50vh] md:h-[95vh] flex justify-center items-center opacity-0 translate-x-0 md:translate-x-12 scale-95 animate-portrait-in fill-mode-forwards relative z-20">
               <div className="relative w-full max-h-[95vh] aspect-[4/5] overflow-hidden">
                 <div
                   className="w-full h-full"
@@ -286,7 +286,7 @@ function App() {
         </section>
 
         <button
-          className={`fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-white/10 border-2 border-gray-400/70 text-gray-400/70 py-3 px-6 md:px-8 rounded-full text-sm md:text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-md z-[9999] ${showBackToTopButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+          className={`fixed bottom-4 right-4 md:bottom-10 md:right-10 bg-white/10 border-2 border-gray-400/70 text-gray-400/70 py-2 px-4 md:py-3 md:px-8 rounded-full text-[10px] md:text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-md z-[9999] ${showBackToTopButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
           onClick={handleBackToTop}
         >
           Back to Top
@@ -376,7 +376,7 @@ function App() {
 
         {/* Signature Footer */}
         <section className="w-full pt-20 pb-0 bg-black flex justify-center items-center overflow-hidden select-none">
-          <h1 className="font-apple font-bold text-[12vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
+          <h1 className="font-apple font-bold text-[20vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
             Kishore
           </h1>
         </section>
