@@ -364,7 +364,7 @@ function App() {
           </div>
         </section>
 
-        <section className="w-full min-h-[80vh] px-[5%] py-10 bg-black relative z-40 font-outfit" ref={contactRef}>
+        <section className="w-full md:min-h-[80vh] min-h-fit px-[5%] py-10 bg-black relative z-40 font-outfit" ref={contactRef}>
           <div className="max-w-[1400px] mx-auto text-center">
             <div className={`transition-all duration-800 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} mb-10`}>
               <h2 className="text-4xl md:text-6xl text-white mb-5 bg-white bg-clip-text text-transparent font-bold">Connect With Me</h2>
@@ -398,7 +398,7 @@ function App() {
         </section>
 
         {/* Signature Footer */}
-        <section className="w-full pt-20 pb-0 bg-black flex justify-center items-center overflow-hidden select-none">
+        <section className="w-full md:pt-20 pt-10 pb-0 bg-black flex justify-center items-center overflow-hidden select-none">
           <h1 className="font-apple font-bold text-[20vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
             Kishore
           </h1>
