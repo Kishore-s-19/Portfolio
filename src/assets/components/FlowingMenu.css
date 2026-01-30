@@ -106,7 +106,7 @@
   pointer-events: none;
   background: #fff;
   transform: translate3d(0, 101%, 0);
-  transition: transform 0.6s ease-expo;
+  transition: transform 0.6s cubic-bezier(0.83, 0, 0.17, 1);
 }
 
 .marquee__inner-wrap {
@@ -159,9 +159,7 @@
   color: #000;
 }
 
-.menu__item-link:hover+.marquee {
-  transform: translate3d(0, 0%, 0);
-}
+
 
 @keyframes marquee {
   from {

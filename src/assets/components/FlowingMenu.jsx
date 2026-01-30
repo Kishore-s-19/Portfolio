@@ -66,19 +66,18 @@ function MenuItem({ link, text, image }) {
     </React.Fragment>
   ));
 
+  const commonProps = {
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    onTouchStart: handleMouseEnter,
+    onTouchEnd: handleMouseLeave
+  };
+
   return (
-    <div className="menu__item" ref={itemRef}>
+    <div className="menu__item" ref={itemRef} {...commonProps}>
       <a
         className="menu__item-link"
         href={link}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={(e) => {
-          // On mobile, if the marquee isn't active, show it first
-          if (window.innerWidth <= 768) {
-            handleMouseEnter(e);
-          }
-        }}
       >
         {text}
       </a>
