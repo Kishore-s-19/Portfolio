@@ -262,7 +262,7 @@ function App() {
 
         <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-white pointer-events-none">
           <div className="text-center flex flex-col items-center gap-10 pointer-events-auto">
-            <h1 className="text-6xl md:text-[8rem] font-bold leading-[1.05] m-0 bg-white bg-clip-text text-transparent tracking-tighter">
+            <h1 className="text-6xl md:text-[7.2rem] font-bold leading-[1.05] m-0 bg-white bg-clip-text text-transparent tracking-tight px-4">
               Kishore S<br />Portfolio
             </h1>
             <div className="flex flex-col md:flex-row gap-6">
