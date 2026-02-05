@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Draggable } from 'gsap/Draggable';
-import { projectsData, menuItems } from '../../../data/portfolio';
+import { projectsData, menuItems, antiGravityPositions } from '../../../data/portfolio';
 import spaceBg from './background/wp3493593-black-space-wallpaper-hd.webp';
 
 // Register plugins
@@ -148,21 +148,11 @@ const AntiGravitySpace = ({ isActive }) => {
                     });
                 }, "-=1.5");
 
-            // Fixed Manual Coordinates for 12 cards (4 projects + 8 tech)
-            const fixedPositions = [
-                { l: 25, t: 25, r: 5 }, { l: 75, t: 28, r: -8 },
-                { l: 22, t: 72, r: -5 }, { l: 78, t: 75, r: 10 },
-                { l: 50, t: 50, r: 0 }, { l: 15, t: 50, r: 15 },
-                { l: 85, t: 48, r: -12 }, { l: 50, t: 18, r: -5 },
-                { l: 52, t: 82, r: 8 }, { l: 38, t: 42, r: -10 },
-                { l: 62, t: 58, r: 5 }, { l: 42, t: 68, r: -15 }
-            ];
-
             // 2. Initialize Draggables
             cardsRef.current.forEach((card, i) => {
                 if (!card) return;
 
-                const pos = fixedPositions[i] || { l: 50, t: 50, r: 0 };
+                const pos = antiGravityPositions[i] || { l: 50, t: 50, r: 0 };
 
                 gsap.set(card, {
                     left: `${pos.l}%`,

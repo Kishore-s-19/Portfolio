@@ -52,3 +52,13 @@ export const projectsData = [
         image: menuarImage
     }
 ];
+// Manual coordinates for Anti-Gravity cards (4 projects + 8 tech)
+// L: Left %, T: Top %, R: Rotation degrees
+export const antiGravityPositions = [
+    { l: 25, t: 25, r: 5 }, { l: 75, t: 28, r: -8 },
+    { l: 22, t: 72, r: -5 }, { l: 78, t: 75, r: 10 },
+    { l: 50, t: 50, r: 0 }, { l: 15, t: 50, r: 15 },
+    { l: 85, t: 48, r: -12 }, { l: 50, t: 18, r: -5 },
+    { l: 52, t: 82, r: 8 }, { l: 38, t: 42, r: -10 },
+    { l: 62, t: 58, r: 5 }, { l: 42, t: 68, r: -15 }
+];
