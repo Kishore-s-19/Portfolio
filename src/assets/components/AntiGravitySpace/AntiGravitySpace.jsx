@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Draggable } from 'gsap/Draggable';
 import { projectsData, menuItems } from '../../../data/portfolio';
+import spaceBg from './background/wp3493593-black-space-wallpaper-hd.webp';
 
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, Draggable);
@@ -11,8 +13,13 @@ const AntiGravitySpace = ({ isActive }) => {
     const containerRef = useRef(null);
     const bgRef = useRef(null);
     const contentRef = useRef(null);
+    const diveOverlayRef = useRef(null);
     const cardsRef = useRef([]);
     const animationsRef = useRef([]);
+    const portalWrapperRef = useRef(null);
+    const cardsContainerRef = useRef(null);
+    const boundsRef = useRef(null);
+    const [portalReady, setPortalReady] = useState(false);
 
     // Combine data for floating items
     const floatingItems = [
@@ -20,8 +27,49 @@ const AntiGravitySpace = ({ isActive }) => {
         ...menuItems.map(m => ({ type: 'tech', ...m }))
     ];
 
+    // Update clip-path and position using GSAP ticker (no React re-renders)
     useEffect(() => {
         if (!isActive) return;
+
+        const updatePortalPosition = () => {
+            if (!containerRef.current || !portalWrapperRef.current || !cardsContainerRef.current) return;
+
+            const rect = containerRef.current.getBoundingClientRect();
+            const scrollY = window.scrollY;
+
+            // Store bounds in ref (not state) to avoid re-renders
+            boundsRef.current = {
+                top: rect.top + scrollY,
+                bottom: rect.bottom + scrollY,
+                left: rect.left,
+                width: rect.width,
+                height: rect.height
+            };
+
+            // Update clip-path: clip only at bottom
+            const bottomClip = Math.max(0, window.innerHeight - rect.bottom);
+            portalWrapperRef.current.style.clipPath = `inset(-9999px -9999px ${bottomClip}px -9999px)`;
+
+            // Use transform for GPU-accelerated positioning (no layout thrashing)
+            cardsContainerRef.current.style.transform = `translate3d(${rect.left}px, ${rect.top}px, 0)`;
+            cardsContainerRef.current.style.width = `${rect.width}px`;
+            cardsContainerRef.current.style.height = `${rect.height}px`;
+        };
+
+        // Use GSAP ticker for smooth 60fps updates without React re-renders
+        gsap.ticker.add(updatePortalPosition);
+
+        // Initial update
+        updatePortalPosition();
+
+        return () => {
+            gsap.ticker.remove(updatePortalPosition);
+        };
+    }, [isActive]);
+
+    // Initialize animations ONCE when portal is ready
+    useEffect(() => {
+        if (!isActive || !portalReady) return;
 
         // 1. Entry Animation when Active
         const ctx = gsap.context(() => {
@@ -33,16 +81,80 @@ const AntiGravitySpace = ({ isActive }) => {
 
             gsap.fromTo(contentRef.current,
                 { opacity: 0, y: 50 },
-                { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: "power2.out" }
+                { opacity: 1, y: 0, duration: 1, delay: 2, ease: "power2.out" }
             );
 
-            // 2. Initialize Draggables and Idle Animation
+            // Cinematic Dive Timeline
+            const tl = gsap.timeline();
+
+            // Initial setup for dive
+            gsap.set(bgRef.current, { scale: 3, filter: 'blur(20px)' });
+            gsap.set(diveOverlayRef.current, { opacity: 1, scale: 1 });
+
+            tl.to(diveOverlayRef.current, {
+                scale: 0,
+                duration: 2,
+                ease: "power4.inOut"
+            })
+                .to(bgRef.current, {
+                    scale: 1,
+                    filter: 'blur(0px)',
+                    duration: 2.5,
+                    ease: "expo.out"
+                }, "-=1.5")
+                .to(diveOverlayRef.current, {
+                    opacity: 0,
+                    duration: 0.5
+                }, "-=1")
+                .add(() => {
+                    // Define startFloating once for all cards
+                    const startFloating = (index) => {
+                        const card = cardsRef.current[index];
+                        if (!card) return;
+
+                        // Kill existing if any to prevent conflicts
+                        if (animationsRef.current[index]) animationsRef.current[index].kill();
+
+                        animationsRef.current[index] = gsap.to(card, {
+                            x: `+=${Math.random() * 60 - 30}`,
+                            y: `+=${Math.random() * 30 - 15}`,
+                            rotation: `+=${Math.random() * 10 - 5}`,
+                            duration: 4 + Math.random() * 4,
+                            repeat: -1,
+                            yoyo: true,
+                            ease: "sine.inOut",
+                            delay: Math.random() * 0.5
+                        });
+                    };
+
+                    // Fly-in cards from Z-space
+                    cardsRef.current.forEach((card, i) => {
+                        if (!card) return;
+                        gsap.to(card, {
+                            z: 0,
+                            scale: 1,
+                            opacity: 1,
+                            duration: 1.5,
+                            delay: Math.random() * 0.5,
+                            ease: "power3.out",
+                            onStart: () => {
+                                // Ensure card is visible when starting
+                                gsap.set(card, { opacity: 1 });
+                            },
+                            onComplete: () => {
+                                startFloating(i);
+                            }
+                        });
+                    });
+                }, "-=1.5");
+
+            // 2. Initialize Draggables (No immediate floating)
             cardsRef.current.forEach((card, i) => {
                 if (!card) return;
 
                 // Random Initial Position logic
                 const randomX = Math.random() * 80 + 10;
-                const randomY = Math.random() * 80 + 10;
+                const randomY = Math.random() * 60 + 10;
                 const randomRot = Math.random() * 20 - 10;
 
                 gsap.set(card, {
@@ -51,30 +163,14 @@ const AntiGravitySpace = ({ isActive }) => {
                     rotation: randomRot,
                     xPercent: -50,
                     yPercent: -50,
-                    scale: 0
+                    z: -3000,
+                    scale: 0.1,
+                    opacity: 0,
+                    transformPerspective: 1000
                 });
 
-                // Pop-in animation
-                gsap.to(card, {
-                    scale: 1,
-                    opacity: 1,
-                    duration: 0.8,
-                    delay: 0.5 + Math.random() * 0.5,
-                    ease: "back.out(1.7)"
-                });
-
-                // Idle Floating
-                const floatTween = gsap.to(card, {
-                    x: `+=${Math.random() * 60 - 30}`,
-                    y: `+=${Math.random() * 60 - 30}`,
-                    rotation: `+=${Math.random() * 10 - 5}`,
-                    duration: 4 + Math.random() * 4,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut",
-                    delay: Math.random() * 2
-                });
-                animationsRef.current[i] = floatTween;
+                // Helper for Draggable to restart floating
+                const restartFloating = () => startFloating(i);
 
                 Draggable.create(card, {
                     type: "x,y",
@@ -87,7 +183,10 @@ const AntiGravitySpace = ({ isActive }) => {
                     onPress: function () {
                         // Kill any active drift
                         if (this.driftTween) this.driftTween.kill();
-                        floatTween.pause();
+
+                        // Kill the idle animation completely so we don't fight it
+                        if (animationsRef.current[i]) animationsRef.current[i].kill();
+
                         gsap.to(this.target, { scale: 1.05, duration: 0.2 });
 
                         // Reset velocity tracking
@@ -112,10 +211,9 @@ const AntiGravitySpace = ({ isActive }) => {
 
                         this.lastTime = now;
 
-                        gsap.to(this.target, {
-                            rotation: this.deltaX * 0.5,
-                            duration: 0.5,
-                            ease: "power2.out"
+                        gsap.set(this.target, {
+                            rotation: `+=${this.deltaX * 0.1}`, // Cumulative rotation (rolling effect)
+                            overwrite: 'auto'
                         });
                     },
                     onRelease: function () {
@@ -133,76 +231,84 @@ const AntiGravitySpace = ({ isActive }) => {
                         this.driftTween = gsap.to(this.target, {
                             x: `+=${vX * slideFactor}`,
                             y: `+=${vY * slideFactor}`,
-                            rotation: `+=${vX * 300}`,
+                            rotation: `+=${vX * 50}`,
                             duration: duration,
                             ease: "power3.out", // Decelerate to stop
                             onComplete: () => {
-                                // Resume gentle random float after stopping
-                                if (!this.isPressed) floatTween.resume();
+                                // Start a FRESH float from the NEW position/rotation
+                                if (!this.isPressed) restartFloating();
                             }
                         });
                     },
                     modifiers: {
                         x: (x) => {
-                            const w = containerRef.current ? containerRef.current.offsetWidth : window.innerWidth;
+                            const w = cardsContainerRef.current ? cardsContainerRef.current.offsetWidth : window.innerWidth;
                             const buffer = 300;
                             return gsap.utils.wrap(-buffer, w + buffer, parseFloat(x)) + "px";
                         },
                         y: (y) => {
-                            const h = containerRef.current ? containerRef.current.offsetHeight : window.innerHeight;
-                            const buffer = 300;
-                            return gsap.utils.wrap(-buffer, h + buffer, parseFloat(y)) + "px";
+                            const h = cardsContainerRef.current ? cardsContainerRef.current.offsetHeight : window.innerHeight;
+                            const yVal = parseFloat(y);
+                            // Allow going up (negative/small values), but clamp at bottom to prevent scroll
+                            if (yVal > h - 50) return (h - 50) + "px"; // Stop 50px before bottom edge
+                            return y;
                         }
                     }
                 });
             });
 
-        }, containerRef);
+        }, cardsContainerRef);
 
         return () => {
             ctx.revert();
             animationsRef.current.forEach(t => t && t.kill());
         };
+    }, [isActive, portalReady]); // Only depends on isActive and portalReady (not sectionBounds)
+
+    // Set portal ready after first render
+    useEffect(() => {
+        if (isActive) {
+            // Small delay to ensure portal is mounted
+            const timer = setTimeout(() => setPortalReady(true), 50);
+            return () => clearTimeout(timer);
+        } else {
+            setPortalReady(false);
+        }
     }, [isActive]);
 
     if (!isActive) return null;
 
-    return (
+    // Floating Cards rendered via Portal
+    const floatingCards = createPortal(
         <div
-            id="anti-gravity-section"
-            ref={containerRef}
-            className="relative w-full h-[120vh] z-50" // Increased z-index, removed overflow-hidden to allow cards to go over other sections
+            ref={portalWrapperRef}
+            className="pointer-events-none"
             style={{
-                isolation: 'isolate',
-                touchAction: 'none'
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100vw',
+                height: '100vh',
+                zIndex: 9999,
+                clipPath: 'inset(-9999px -9999px 0px -9999px)', // Initial, updated by ticker
+                pointerEvents: 'none'
             }}
         >
-            {/* Deep Space Gradient Background - keeping it contained to this section */}
             <div
-                ref={bgRef}
-                className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden" // Background stays contained
+                ref={cardsContainerRef}
+                className="pointer-events-auto"
                 style={{
-                    background: 'radial-gradient(ellipse at bottom, #111 0%, #000000 100%)',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '120vh',
+                    willChange: 'transform',
+                    backfaceVisibility: 'hidden',
+                    perspective: 1000,
+                    transformStyle: 'preserve-3d'
                 }}
             >
-                {/* CSS Stars / Noise */}
-                <div className="absolute inset-0 opacity-30"
-                    style={{
-                        backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
-                        mixBlendMode: 'overlay'
-                    }}
-                />
-            </div>
-
-            <div ref={contentRef} className="absolute top-20 w-full text-center pointer-events-none z-10">
-                <h2 className="text-white/20 font-outfit text-2xl tracking-widest uppercase">
-                    Zero Gravity
-                </h2>
-                <p className="text-white/10 text-sm mt-2 font-light">Drag to explore</p>
-            </div>
-
-            {/* Floating Cards Area */}
-            <div className="absolute inset-0 w-full h-full"> {/* Removed overflow-hidden */}
                 {floatingItems.map((item, index) => (
                     <div
                         key={index}
@@ -210,32 +316,34 @@ const AntiGravitySpace = ({ isActive }) => {
                         className={`absolute select-none will-change-transform ${item.type === 'project' ? 'w-64 md:w-80 z-20' : 'w-20 md:w-28 z-10'}`}
                         style={{
                             opacity: 0, // initially hidden
-                            cursor: 'grab'
+                            cursor: 'grab',
+                            transformStyle: 'preserve-3d',
+                            backfaceVisibility: 'hidden'
                         }}
                     >
                         {item.type === 'project' ? (
-                            <div className="rounded-2xl overflow-hidden bg-[#1a1a1a]/40 border border-white/10 backdrop-blur-md shadow-2xl transition-all duration-300 hover:border-white/30 group">
-                                <div className="h-40 overflow-hidden relative">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
+                            <div className="rounded-[22px] overflow-hidden bg-white/5 border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] group" style={{ backfaceVisibility: 'hidden' }}>
+                                <div className="h-40 md:h-48 overflow-hidden relative">
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
                                     <img
                                         src={item.image}
                                         alt={item.title}
-                                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                                         draggable="false"
                                         loading="lazy"
                                     />
                                 </div>
-                                <div className="p-4 relative z-20">
-                                    <h3 className="text-white text-lg font-bold truncate mb-1">{item.title}</h3>
-                                    <p className="text-gray-400 text-xs truncate">{item.description}</p>
+                                <div className="p-5 relative z-20 font-apple">
+                                    <h3 className="text-white text-lg font-semibold tracking-tight truncate mb-1">{item.title}</h3>
+                                    <p className="text-white/50 text-[13px] font-normal leading-snug line-clamp-2">{item.description}</p>
                                 </div>
                             </div>
                         ) : (
-                            <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm shadow-lg aspect-square hover:bg-white/10 transition-colors">
+                            <div className="flex flex-col items-center justify-center p-4 rounded-[22px] bg-white/5 border border-white/10 backdrop-blur-xl shadow-xl aspect-square hover:bg-white/10 transition-colors group">
                                 <img
                                     src={item.image}
                                     alt={item.text}
-                                    className="w-full h-full object-contain mb-1 drop-shadow-lg"
+                                    className="w-[80%] h-[80%] object-contain mb-1 drop-shadow-[0_10px_10px_rgba(0,0,0,0.3)] group-hover:scale-110 transition-transform duration-500"
                                     draggable="false"
                                     loading="lazy"
                                 />
@@ -244,7 +352,59 @@ const AntiGravitySpace = ({ isActive }) => {
                     </div>
                 ))}
             </div>
-        </div>
+        </div>,
+        document.body
+    );
+
+    return (
+        <>
+            <div
+                id="anti-gravity-section"
+                ref={containerRef}
+                className="relative w-full h-[120vh] z-50 overflow-hidden" // overflow-hidden for background only
+                style={{
+                    isolation: 'isolate',
+                    touchAction: 'none'
+                }}
+            >
+                {/* Deep Space Galaxy Background Image */}
+                <div
+                    ref={bgRef}
+                    className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
+                    style={{
+                        backgroundImage: `url("${spaceBg}")`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundColor: '#000',
+                        willChange: 'transform, filter'
+                    }}
+                >
+                </div>
+
+                {/* Cinematic Black Hole Dive Overlay */}
+                <div
+                    ref={diveOverlayRef}
+                    className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center overflow-hidden"
+                    style={{ opacity: 0 }}
+                >
+                    <div className="w-[300vw] h-[300vh] rounded-full bg-black flex-shrink-0"
+                        style={{
+                            boxShadow: 'inset 0 0 200px rgba(255,255,255,0.05)',
+                            background: 'radial-gradient(circle, transparent 20%, black 60%)'
+                        }}
+                    />
+                </div>
+
+                <div ref={contentRef} className="absolute top-24 w-full text-center pointer-events-none z-10 font-apple">
+                    <h2 className="text-white/40 font-semibold text-[13px] tracking-[0.3em] uppercase">
+                        Zero Gravity
+                    </h2>
+                    <p className="text-white/20 text-xs mt-3 font-normal tracking-wide">Drag to explore the void</p>
+                </div>
+            </div>
+            {floatingCards}
+        </>
     );
 };
 
