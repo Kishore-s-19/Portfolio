@@ -262,18 +262,18 @@ function App() {
 
         <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-white pointer-events-none">
           <div className="text-center flex flex-col items-center gap-10 pointer-events-auto">
-            <h1 className="text-4xl md:text-7xl font-bold leading-tight m-0 bg-white bg-clip-text text-transparent">
+            <h1 className="text-6xl md:text-[8rem] font-bold leading-[1.05] m-0 bg-white bg-clip-text text-transparent tracking-tighter">
               Kishore S<br />Portfolio
             </h1>
             <div className="flex flex-col md:flex-row gap-6">
               <button
-                className="bg-white/5 border border-white/20 text-white/90 py-4 w-48 rounded-full text-lg font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple"
+                className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
                 onClick={handleLearnMoreClick}
               >
                 About Me
               </button>
               <button
-                className="bg-white/5 border border-white/20 text-white/90 py-4 w-48 rounded-full text-lg font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple"
+                className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
                 onClick={() => window.open('https://drive.google.com/file/d/1YhfLLa9elkESSoeHWxqzj8XU6b535RPg/view?usp=sharing', '_blank')}
               >
                 Resume
@@ -307,7 +307,7 @@ function App() {
                       {para.join(' ').split(' ').map((word, wordIdx) => (
                         <span key={wordIdx} className="inline-block whitespace-nowrap mr-[0.25em]">
                           {word.split('').map((char, charIdx) => (
-                            <span key={charIdx} className="reveal-char text-[#555555]">
+                            <span key={charIdx} className="reveal-char text-[#2c2c2e]">
                               {char}
                             </span>
                           ))}
@@ -354,10 +354,10 @@ function App() {
         <section className="w-full min-h-screen relative bg-black px-[5%] py-20 z-30 font-apple" ref={projectsRef}>
           <div className="max-w-[1400px] mx-auto">
             <div className={`transition-all duration-1000 transform ${isProjectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} mb-16`}>
-              <h2 className="text-4xl md:text-5xl text-white mb-6 font-semibold tracking-tight">Featured Work</h2>
-              <p className="text-white/40 text-lg leading-relaxed max-w-2xl font-normal">
+              <h2 className="text-5xl md:text-[4rem] text-white mb-6 font-bold tracking-tighter leading-tight">Featured Work.</h2>
+              <p className="text-[#86868b] text-xl md:text-2xl leading-relaxed max-w-2xl font-medium tracking-tight">
                 A selection of recent projects built with a focus on
-                interactive excellence, modular systems, and fluid experiences.
+                interactive excellence and fluid experiences.
               </p>
             </div>
 
@@ -369,16 +369,16 @@ function App() {
                     <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
 
-                  <div className="p-7 flex-grow flex flex-col">
+                  <div className="p-8 flex-grow flex flex-col">
                     <div className="mb-6">
-                      <h3 className="text-white text-xl font-semibold mb-3 tracking-tight">{project.title}</h3>
+                      <h3 className="text-white text-2xl font-semibold mb-3 tracking-tight">{project.title}</h3>
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag, i) => (
-                          <span key={i} className="bg-white/5 text-white/60 py-1 px-3 rounded-full text-[11px] font-medium border border-white/10 transition-all duration-300">{tag}</span>
+                          <span key={i} className="bg-white/5 text-[#86868b] py-1 px-3 rounded-full text-[12px] font-medium border border-white/10">{tag}</span>
                         ))}
                       </div>
                     </div>
-                    <p className="text-white/40 leading-relaxed mb-8 text-[13px] font-normal flex-grow line-clamp-3">{project.description}</p>
+                    <p className="text-[#86868b] leading-relaxed mb-8 text-[17px] font-normal flex-grow line-clamp-3">{project.description}</p>
                     <div className="flex gap-3 mt-auto">
                       <a href={project.github} className="flex-1 flex items-center justify-center gap-2 text-white/80 py-2.5 px-4 border border-white/10 rounded-full text-[12px] font-medium transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white" target="_blank" rel="noopener noreferrer">
                         GitHub
@@ -397,8 +397,8 @@ function App() {
         <section className="w-full md:min-h-[80vh] min-h-fit px-[5%] py-32 bg-black relative z-40 font-apple" ref={contactRef}>
           <div className="max-w-[1400px] mx-auto text-center">
             <div className={`transition-all duration-800 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} mb-16`}>
-              <h2 className="text-4xl md:text-5xl text-white mb-6 font-semibold tracking-tight">Connect With Me</h2>
-              <p className="text-white/40 text-lg leading-relaxed max-w-xl mx-auto font-normal">
+              <h2 className="text-5xl md:text-[4rem] text-white mb-6 font-bold tracking-tighter leading-tight">Connect With Me.</h2>
+              <p className="text-[#86868b] text-xl md:text-2xl leading-relaxed max-w-xl mx-auto font-medium tracking-tight">
                 Let's discuss your next project or just say hi.
               </p>
             </div>
@@ -418,15 +418,15 @@ function App() {
             </div>
 
             <div className={`transition-all duration-800 delay-500 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <p className="text-white text-xl font-medium mb-8 tracking-tight">Select an icon to start a conversation</p>
-              <div className="flex flex-col md:flex-row justify-center gap-10 md:gap-20">
+              <p className="text-[#86868b] text-xl md:text-2xl font-medium mb-12 tracking-tight">Select an icon to start a conversation.</p>
+              <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-24">
                 <div className="text-center md:text-left">
-                  <p className="text-white/30 text-xs uppercase tracking-[0.2em] mb-2 font-medium">Email Address</p>
-                  <p className="text-white/80 text-lg font-normal">kdkishore315@gmail.com</p>
+                  <p className="text-[#86868b] text-xs uppercase tracking-[0.2em] mb-3 font-semibold">Email Address</p>
+                  <p className="text-white text-xl font-medium tracking-tight">kdkishore315@gmail.com</p>
                 </div>
                 <div className="text-center md:text-left">
-                  <p className="text-white/30 text-xs uppercase tracking-[0.2em] mb-2 font-medium">Timezone</p>
-                  <p className="text-white/80 text-lg font-normal">IST (GMT +5:30)</p>
+                  <p className="text-[#86868b] text-xs uppercase tracking-[0.2em] mb-3 font-semibold">Timezone</p>
+                  <p className="text-white text-xl font-medium tracking-tight">IST (GMT +5:30)</p>
                 </div>
               </div>
             </div>

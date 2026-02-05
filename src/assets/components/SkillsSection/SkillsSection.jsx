@@ -107,7 +107,7 @@ const SkillsSection = () => {
 
                 {skillCategories.map((category, catIdx) => (
                     <div key={catIdx} className={`skills-category category-group-${catIdx}`}>
-                        <h3 className="category-title" style={{ color: '#ffffff' }}>
+                        <h3 className="category-title">
                             {category.title}
                         </h3>
                         <div className="skills-grid">
