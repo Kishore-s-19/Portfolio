@@ -11,6 +11,7 @@ import { NaukriIcon } from './assets/components/LogoLoop/Icon.jsx';
 
 // Import LogoLoop correctly from the new file
 import LogoLoop from './assets/components/LogoLoop/LogoLoop.jsx';
+import AntiGravitySpace from './assets/components/AntiGravitySpace/AntiGravitySpace.jsx';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -20,61 +21,8 @@ const MemoFlowingMenu = memo(FlowingMenu);
 const MemoLogoLoop = memo(LogoLoop);
 
 // Menu items data for FlowingMenu
-const menuItems = [
-  { text: 'Java', image: 'https://i.pinimg.com/736x/36/3e/ae/363eae82e52a8a5681622235ea4a38d7.jpg' },
-  { text: 'Python', image: 'https://www.pngmart.com/files/23/Python-Logo-PNG-Image.png' },
-  { text: 'MySQL', image: 'https://www.freepnglogos.com/uploads/logo-mysql-png/logo-mysql-development-mysql-logo-code-icon-9.png' },
-  { text: 'GitHub', image: 'https://cdn-icons-png.flaticon.com/512/25/25231.png' },
-  { text: 'SpringBoot', image: 'https://img.icons8.com/color/480/spring-logo.png' },
-  { text: 'JavaScript', image: 'https://seekvectors.com/files/download/JAVASCRIPT%20Logo.png' },
-  { text: 'React', image: 'https://www.agilesparks.com/wp-content/uploads/2021/08/react-1024x1024.png' },
-  { text: 'PremierePro', image: 'https://vectorseek.com/wp-content/uploads/2022/02/Adobe-Premiere-Pro-Logo-Vector-768x768.jpg' }
-];
-
-import groomupImage from './assets/images/groomup.png';
-import menuarImage from './assets/images/menuar.png';
-import hersheyImage from './assets/images/site pic.png';
-import portfolioImage from './assets/images/portfolio1.png';
-
-// Project data with images
-const projectsData = [
-  {
-    id: 1,
-    title: 'Portfolio Website',
-    description: 'Personal portfolio to showcase my design and coding projects.',
-    tags: ['React', 'TailwindCSS', 'Framer', 'JavaScript'],
-    github: 'https://github.com/Kishore-s-19/Portfolio',
-    live: 'https://live-demo.com',
-    image: portfolioImage
-  },
-  {
-    id: 2,
-    title: 'Hershey-Product-site',
-    description: 'A premium scrollytelling e-commerce experience for Hershey’s, transforming a static product page into an immersive narrative. Built using Next.js 14 and Framer Motion',
-    tags: ['Next.js 14', 'javascript', 'Framer motion', 'vercel'],
-    github: 'https://github.com/Kishore-s-19/Product-site_Hershey',
-    live: 'https://product-site-hershey.vercel.app/',
-    image: hersheyImage
-  },
-  {
-    id: 3,
-    title: 'E-commerce Platform',
-    description: 'Groomup is a full-stack grooming service platform that enables users to explore services, book appointments, and make secure online payments.',
-    tags: ['React', 'Springboot', 'MySQL', 'Razorpay'],
-    github: 'https://github.com/Kishore-s-19/GroomupApp',
-    live: 'https://groomup-app.vercel.app/',
-    image: groomupImage
-  },
-  {
-    id: 4,
-    title: 'MenuAR – QR-Based Augmented Reality Menu',
-    description: 'MenuAR is a QR-based web application that lets restaurant customers view dishes in augmented reality before ordering',
-    tags: ['Java', 'Springboot', 'React', 'MySql'],
-    github: 'https://github.com/Kishore-s-19/MenuAR',
-    live: 'https://menu-ar-tau.vercel.app/restaurant',
-    image: menuarImage
-  }
-];
+// Import shared data
+import { menuItems, projectsData } from './data/portfolio';
 
 // Contact LogoLoop data (Social Media Icons)
 const contactLogos = [
@@ -113,6 +61,87 @@ function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [useShaderBackground, setUseShaderBackground] = useState(true);
   const [showBackToTopButton, setShowBackToTopButton] = useState(false);
+
+  // Anti-Gravity Space Logic
+  const [isSpaceActive, setIsSpaceActive] = useState(false);
+  const pullProgressRef = useRef(0);
+  const pullThreshold = 200; // Amount of pixels to "pull"
+
+  useEffect(() => {
+    // Only active if space is not already showing
+    if (isSpaceActive) return;
+
+    let touchStartY = 0;
+
+    const handleWheel = (e) => {
+      if (isSpaceActive) return;
+
+      // check if at bottom
+      const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 2;
+
+      if (scrolledToBottom && e.deltaY > 0) {
+        // User is trying to scroll down while at receiver
+        pullProgressRef.current += e.deltaY;
+
+        if (pullProgressRef.current > pullThreshold * 3) { // Higher threshold for wheel
+          setIsSpaceActive(true);
+          pullProgressRef.current = 0;
+        }
+      } else {
+        pullProgressRef.current = 0;
+      }
+    };
+
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e) => {
+      if (isSpaceActive) return;
+      const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 2;
+
+      if (scrolledToBottom) {
+        const touchCurrentY = e.touches[0].clientY;
+        const deltaY = touchStartY - touchCurrentY; // Positive if dragging up (scrolling down)
+
+        if (deltaY > 0) {
+          pullProgressRef.current += deltaY * 0.5; // slow down sensitivity
+          if (pullProgressRef.current > pullThreshold) {
+            setIsSpaceActive(true);
+            pullProgressRef.current = 0;
+          }
+        }
+      }
+    };
+
+    const handleTouchEnd = () => {
+      pullProgressRef.current = 0;
+    };
+
+    window.addEventListener('wheel', handleWheel);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isSpaceActive]);
+
+  // Auto-scroll to space when activated
+  useEffect(() => {
+    if (isSpaceActive) {
+      setTimeout(() => {
+        const section = document.getElementById('anti-gravity-section');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [isSpaceActive]);
 
   useEffect(() => {
     const detectWebGL = () => {
@@ -212,6 +241,7 @@ function App() {
   };
 
   const handleBackToTop = () => {
+    setIsSpaceActive(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     // setTimeout(() => {
     //   setShowAboutPage(false);
@@ -398,11 +428,13 @@ function App() {
         </section>
 
         {/* Signature Footer */}
-        <section className="w-full md:pt-20 pt-10 pb-0 bg-black flex justify-center items-center overflow-hidden select-none">
+        <section className="w-full md:pt-20 pt-10 pb-0 bg-black flex justify-center items-center overflow-hidden select-none relative z-10">
           <h1 className="font-apple font-bold text-[20vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
             Kishore
           </h1>
         </section>
+
+        <AntiGravitySpace isActive={isSpaceActive} />
       </div>
     </div>
   );
