@@ -97,7 +97,7 @@ const SkillsSection = () => {
     }, []);
 
     return (
-        <section className="skills-section font-outfit" ref={sectionRef}>
+        <section className="skills-section font-apple" ref={sectionRef}>
             <div className="skills-container">
                 <div className="skills-header">
                     <h2 className="skills-title">Technical Skills</h2>
