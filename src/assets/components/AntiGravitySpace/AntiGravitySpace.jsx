@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Draggable } from 'gsap/Draggable';
 import { projectsData, menuItems, antiGravityPositions } from '../../../data/portfolio';
 import spaceBg from './background/wp3493593-black-space-wallpaper-hd.webp';
+import portraitImage from '../../images/IMG_2566.PNG';
 
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, Draggable);
@@ -24,7 +25,8 @@ const AntiGravitySpace = ({ isActive }) => {
     // Combine data for floating items
     const floatingItems = [
         ...projectsData.map(p => ({ type: 'project', ...p })),
-        ...menuItems.map(m => ({ type: 'tech', ...m }))
+        ...menuItems.map(m => ({ type: 'tech', ...m })),
+        { type: 'airdrop', title: 'AirDrop', image: portraitImage }
     ];
 
     // Update clip-path and position using GSAP ticker (no React re-renders)
@@ -333,6 +335,30 @@ const AntiGravitySpace = ({ isActive }) => {
                                 <div className="p-5 relative z-20 font-apple">
                                     <h3 className="text-white text-lg font-semibold tracking-tight truncate mb-1">{item.title}</h3>
                                     <p className="text-white/50 text-[13px] font-normal leading-snug line-clamp-2">{item.description}</p>
+                                </div>
+                            </div>
+                        ) : item.type === 'airdrop' ? (
+                            <div className="w-64 md:w-72 bg-white rounded-[28px] overflow-hidden flex flex-col shadow-2xl pointer-events-auto select-none" style={{ backfaceVisibility: 'hidden' }}>
+                                <div className="py-4 text-center">
+                                    <h3 className="text-black text-xl font-bold tracking-tight">AirDrop</h3>
+                                </div>
+                                <div className="px-1">
+                                    <div className="aspect-square w-full overflow-hidden bg-gray-100">
+                                        <img
+                                            src={item.image}
+                                            alt="AirDrop Preview"
+                                            className="w-full h-full object-cover grayscale brightness-90 contrast-110"
+                                            draggable="false"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex border-t border-gray-200">
+                                    <button className="flex-1 py-4 text-[#007AFF] text-lg font-medium hover:bg-gray-50 transition-colors border-r border-gray-200 active:bg-gray-100">
+                                        Decline
+                                    </button>
+                                    <button className="flex-1 py-4 text-[#007AFF] text-lg font-bold hover:bg-gray-50 transition-colors active:bg-gray-100">
+                                        Accept
+                                    </button>
                                 </div>
                             </div>
                         ) : (

@@ -52,13 +52,22 @@ export const projectsData = [
         image: menuarImage
     }
 ];
-// Manual coordinates for Anti-Gravity cards (4 projects + 8 tech)
-// L: Left %, T: Top %, R: Rotation degrees
+// Manual coordinates for Anti-Gravity cards (4 projects + 8 tech icons)
+// l: Left (position from left as % of screen width)
+// t: Top (position from top as % of screen height)
+// r: Rotation (initial tilt in degrees)
 export const antiGravityPositions = [
-    { l: 25, t: 25, r: 5 }, { l: 75, t: 28, r: -8 },
-    { l: 22, t: 72, r: -5 }, { l: 78, t: 75, r: 10 },
-    { l: 50, t: 50, r: 0 }, { l: 15, t: 50, r: 15 },
-    { l: 85, t: 48, r: -12 }, { l: 50, t: 18, r: -5 },
-    { l: 52, t: 82, r: 8 }, { l: 38, t: 42, r: -10 },
-    { l: 62, t: 58, r: 5 }, { l: 42, t: 68, r: -15 }
+    { l: 25, t: 25, r: 0 },   // 1. Portfolio Website
+    { l: 75, t: 28, r: 0 },  // 2. Hershey-Product-site
+    { l: 22, t: 72, r: 0 },  // 3. E-commerce Platform (Groomup)
+    { l: 78, t: 75, r: 0 },  // 4. MenuAR
+    { l: 50, t: 50, r: 0 },   // 5. Java (Tech)
+    { l: 15, t: 50, r: 15 },  // 6. Python (Tech)
+    { l: 85, t: 48, r: -12 }, // 7. MySQL (Tech)
+    { l: 50, t: 18, r: -5 },  // 8. GitHub (Tech)
+    { l: 52, t: 82, r: 8 },   // 9. SpringBoot (Tech)
+    { l: 38, t: 42, r: -10 }, // 10. JavaScript (Tech)
+    { l: 62, t: 58, r: 5 },   // 11. React (Tech)
+    { l: 42, t: 68, r: -15 }, // 12. PremierePro (Tech)
+    { l: 12, t: 22, r: -5 }   // 13. AirDrop Card (Portrait)
 ];
