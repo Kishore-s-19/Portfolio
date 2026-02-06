@@ -59,6 +59,11 @@ import createImage from './images/create.avif';
 import designProgressImage from './images/design progress.avif';
 import faceidImage from './images/faceid.avif';
 import whyAmIHereImage from './images/why am i here.avif';
+import portraitShot from './images/IMG_3293.png';
+import hansZimmerMusic from './music/Man of Steel Soundtrack ｜ What Are You Going to Do When You Are Not Saving the World？ - Hans Zimmer.mp3';
+import cornfieldChaseMusic from './music/Interstellar Official Soundtrack ｜ Cornfield Chase – Hans Zimmer ｜ WaterTower.mp3';
+import canYouHearTheMusic from './music/Can You Hear The Music.mp3';
+import aboutMeVideo from './video/ScreenRecording_02-07-2026 00-46-07_1_1.mp4';
 
 // Manual configuration for Anti-Gravity cards
 // l: Left position (% of screen width)
@@ -88,7 +93,7 @@ export const antiGravityCards = [
         type: 'image',
         title: 'Arrow',
         image: arrowImage,
-        l: 50,
+        l: 52.5,
         t: 55,
         r: 0,
         w: 30,
@@ -98,10 +103,11 @@ export const antiGravityCards = [
         type: 'image',
         title: 'Create',
         image: createImage,
-        l: 75,
-        t: 25,
-        r: 0,
-        w: 180
+        l: 85,
+        t: 31.2,
+        r: 18,
+        w: 115,
+        zi: 35
     },
     {
         type: 'image',
@@ -110,24 +116,77 @@ export const antiGravityCards = [
         l: 45,
         t: 50,
         r: 0,
-        w: 300
+        w: 380
     },
     {
         type: 'image',
         title: 'FaceID',
         image: faceidImage,
-        l: 30,
-        t: 20,
+        l: 25.5,
+        t: 29,
         r: 0,
-        w: 150
+        w: 130
+    },
+    {
+        type: 'apple',
+        tracks: [
+            {
+                title: 'What Are You Going To Do When You Are Not Saving The World?',
+                artist: 'Hans Zimmer',
+                image: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/81/e4/f1/81e4f187-cfde-607d-a4f2-50985495456e/794043169724.jpg/600x600bb.jpg',
+                audioUrl: hansZimmerMusic,
+                trackUrl: 'https://music.apple.com/in/song/what-are-you-going-to-do-when-you-are-not-saving-the-world/1454398394'
+            },
+            {
+                title: 'Cornfield Chase',
+                artist: 'Hans Zimmer',
+                image: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/f4/5b/73/f45b735a-8d7a-9713-b217-0f8e1593c28b/794043201943.jpg/592x592bb.webp',
+                audioUrl: cornfieldChaseMusic,
+                trackUrl: 'https://music.apple.com/in/song/cornfield-chase/1533984393'
+            },
+            {
+                title: 'Can You Hear The Music',
+                artist: 'Ludwig Göransson',
+                image: 'https://is1-ssl.mzstatic.com/image/thumb/Video126/v4/1a/5c/ac/1a5cacf0-9cec-623b-7627-e729e416cd5a/Job85a5e805-e111-49d6-8d17-69054cb02f6d-152847553-PreviewImage_Preview_Image_Intermediate_nonvideo_sdr_291457807_1503330704-Time1689395212724.png/592x592bb.webp',
+                audioUrl: canYouHearTheMusic,
+                trackUrl: 'https://music.apple.com/in/song/can-you-hear-the-music/1697599275'
+            }
+        ],
+        l: 23.5,
+        t: 78,
+        r: 0,
+        w: 380,
+        zi: 40,
+        delay: 0.4
+    },
+    {
+        type: 'image',
+        title: 'Portrait',
+        image: portraitShot,
+        l: 10.8,
+        t: 66.5,
+        r: 0,
+        w: 200,
+        zi: 50,
+        delay: 0.1
     },
     {
         type: 'image',
         title: 'Why am I here?',
         image: whyAmIHereImage,
-        l: 65,
+        l: 85,
+        t: 75,
+        r: 0,
+        w: 220
+    },
+    {
+        type: 'video',
+        title: 'About me',
+        video: aboutMeVideo,
+        l: 75,
         t: 45,
         r: 0,
-        w: 200
+        w: 300,
+        zi: 30
     }
 ];
