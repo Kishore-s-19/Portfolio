@@ -52,22 +52,82 @@ export const projectsData = [
         image: menuarImage
     }
 ];
-// Manual coordinates for Anti-Gravity cards (4 projects + 8 tech icons)
-// l: Left (position from left as % of screen width)
-// t: Top (position from top as % of screen height)
-// r: Rotation (initial tilt in degrees)
-export const antiGravityPositions = [
-    { l: 25, t: 25, r: 0 },   // 1. Portfolio Website
-    { l: 75, t: 28, r: 0 },  // 2. Hershey-Product-site
-    { l: 22, t: 72, r: 0 },  // 3. E-commerce Platform (Groomup)
-    { l: 78, t: 75, r: 0 },  // 4. MenuAR
-    { l: 50, t: 50, r: 0 },   // 5. Java (Tech)
-    { l: 15, t: 50, r: 15 },  // 6. Python (Tech)
-    { l: 85, t: 48, r: -12 }, // 7. MySQL (Tech)
-    { l: 50, t: 18, r: -5 },  // 8. GitHub (Tech)
-    { l: 52, t: 82, r: 8 },   // 9. SpringBoot (Tech)
-    { l: 38, t: 42, r: -10 }, // 10. JavaScript (Tech)
-    { l: 62, t: 58, r: 5 },   // 11. React (Tech)
-    { l: 42, t: 68, r: -15 }, // 12. PremierePro (Tech)
-    { l: 12, t: 22, r: -5 }   // 13. AirDrop Card (Portrait)
+import newImageCard from './images/IMG_3276.webp';
+import portfolio2026 from './images/portfolio 2026.avif';
+import arrowImage from './images/arrow.avif';
+import createImage from './images/create.avif';
+import designProgressImage from './images/design progress.avif';
+import faceidImage from './images/faceid.avif';
+import whyAmIHereImage from './images/why am i here.avif';
+
+// Manual configuration for Anti-Gravity cards
+// l: Left position (% of screen width)
+// t: Top position (% of screen height)
+// r: Rotation (degrees)
+// w: Width (pixels)
+export const antiGravityCards = [
+    {
+        type: 'image',
+        title: 'Creative Shot',
+        image: newImageCard,
+        l: 25,
+        t: 35,
+        r: 0,
+        w: 260
+    },
+    {
+        type: 'image',
+        title: 'Portfolio 2026',
+        image: portfolio2026,
+        l: 50,
+        t: 70,
+        r: 0,
+        w: 220
+    },
+    {
+        type: 'image',
+        title: 'Arrow',
+        image: arrowImage,
+        l: 50,
+        t: 55,
+        r: 0,
+        w: 30,
+        zi: 20
+    },
+    {
+        type: 'image',
+        title: 'Create',
+        image: createImage,
+        l: 75,
+        t: 25,
+        r: 0,
+        w: 180
+    },
+    {
+        type: 'image',
+        title: 'Design Progress',
+        image: designProgressImage,
+        l: 45,
+        t: 50,
+        r: 0,
+        w: 300
+    },
+    {
+        type: 'image',
+        title: 'FaceID',
+        image: faceidImage,
+        l: 30,
+        t: 20,
+        r: 0,
+        w: 150
+    },
+    {
+        type: 'image',
+        title: 'Why am I here?',
+        image: whyAmIHereImage,
+        l: 65,
+        t: 45,
+        r: 0,
+        w: 200
+    }
 ];
