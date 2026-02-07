@@ -129,7 +129,7 @@ const SpotifyCard = ({ item }) => {
 };
 
 // Sub-component for Apple Music Card
-const AppleMusicCard = ({ item }) => {
+const AppleMusicCard = ({ item, onAudioData }) => {
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const tracks = item.tracks || [item];
     const currentTrack = tracks[currentTrackIndex];
@@ -144,6 +144,106 @@ const AppleMusicCard = ({ item }) => {
     const progressBarRef = useRef(null);
     const controlsRef = useRef(null);
     const starRef = useRef(null);
+
+    // Audio Analysis for Cinematic Effect
+    const audioContextRef = useRef(null);
+    const analyserRef = useRef(null);
+    const sourceNodeRef = useRef(null);
+    const animationFrameRef = useRef(null);
+    const connectedAudioRef = useRef(null); // Track which audio element is connected
+
+    // Initialize Audio Analysis when playing starts
+    useEffect(() => {
+        if (!isPlaying || !audioRef.current) {
+            // Stop analysis when not playing
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+                animationFrameRef.current = null;
+            }
+            return;
+        }
+
+        // Initialize AudioContext on first play
+        if (!audioContextRef.current) {
+            try {
+                audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+                analyserRef.current = audioContextRef.current.createAnalyser();
+                analyserRef.current.fftSize = 256;
+                analyserRef.current.smoothingTimeConstant = 0.8;
+            } catch (e) {
+                console.warn('AudioContext not supported:', e);
+                return;
+            }
+        }
+
+        // Connect audio element to analyser
+        // Re-connect if audio element has changed (shouldn't happen now without key)
+        if (audioRef.current && connectedAudioRef.current !== audioRef.current) {
+            try {
+                // Disconnect old source if exists
+                if (sourceNodeRef.current) {
+                    try { sourceNodeRef.current.disconnect(); } catch (e) { }
+                }
+                sourceNodeRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
+                sourceNodeRef.current.connect(analyserRef.current);
+                analyserRef.current.connect(audioContextRef.current.destination);
+                connectedAudioRef.current = audioRef.current;
+                console.log('[AudioAnalysis] Connected to audio element');
+            } catch (e) {
+                console.warn('[AudioAnalysis] Connection error:', e.message);
+            }
+        }
+
+        // Resume context if suspended
+        if (audioContextRef.current.state === 'suspended') {
+            audioContextRef.current.resume();
+        }
+
+        // Start analysis loop
+        const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
+        let lastPeak = 0;
+
+        const analyze = () => {
+            if (!isPlaying || !analyserRef.current) return;
+
+            analyserRef.current.getByteFrequencyData(dataArray);
+
+            // Calculate bass energy (first ~10 bins = low frequencies)
+            const bassRange = dataArray.slice(0, 12);
+            const bassEnergy = bassRange.reduce((a, b) => a + b, 0) / (bassRange.length * 255);
+
+            // Calculate overall energy
+            const totalEnergy = dataArray.reduce((a, b) => a + b, 0) / (dataArray.length * 255);
+
+            // Detect peaks (sudden increases)
+            const currentPeak = Math.max(bassEnergy, totalEnergy * 1.5);
+            const peakDelta = currentPeak - lastPeak;
+            const peak = peakDelta > 0.1 ? Math.min(currentPeak + peakDelta, 1) : currentPeak * 0.9;
+            lastPeak = currentPeak * 0.95; // Decay
+
+            // Send data to parent if callback exists
+            if (onAudioData) {
+                onAudioData({
+                    energy: totalEnergy,
+                    bassEnergy: bassEnergy,
+                    peak: peak,
+                    trackTitle: currentTrack.title,
+                    currentTime: audioRef.current ? audioRef.current.currentTime : 0,
+                    duration: audioRef.current ? audioRef.current.duration : 0
+                });
+            }
+
+            animationFrameRef.current = requestAnimationFrame(analyze);
+        };
+
+        analyze();
+
+        return () => {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
+    }, [isPlaying, onAudioData, currentTrack.title]);
 
     const handleFavorite = (e) => {
         if (e) e.stopPropagation();
@@ -161,6 +261,16 @@ const AppleMusicCard = ({ item }) => {
             .to(starRef.current, { scale: 1.4, duration: 0.1, ease: "power2.out" })
             .to(starRef.current, { scale: 1, duration: 0.5, ease: "elastic.out(1.5, 0.5)" });
     };
+
+    // Handle track changes - load new source
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.load(); // Load the new src
+            if (isPlaying) {
+                audioRef.current.play().catch(() => { }); // Resume if was playing
+            }
+        }
+    }, [currentTrackIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleForward = (e) => {
         if (e) e.stopPropagation();
@@ -284,7 +394,6 @@ const AppleMusicCard = ({ item }) => {
     return (
         <div className="w-full bg-black rounded-[24px] p-4 flex flex-col gap-4 shadow-2xl relative border border-white/5 pointer-events-auto font-apple select-none overflow-hidden group">
             <audio
-                key={currentTrackIndex}
                 ref={audioRef}
                 src={currentTrack.audioUrl}
                 onTimeUpdate={handleTimeUpdate}
@@ -522,6 +631,274 @@ const MacVideoCard = ({ item }) => {
     );
 };
 
+// ============================================================================
+// CINEMATIC OVERLAY - Beat-Synced Superman Effect
+// ============================================================================
+const CinematicOverlay = ({ audioDataRef, isActive }) => {
+    const overlayRef = useRef(null);
+    const atmosphereRef = useRef(null);
+    const flashRef = useRef(null);
+    const energyFieldRef = useRef(null);
+    const grainRef = useRef(null);
+    const parasiteRef = useRef(null);
+    const vignetteRef = useRef(null);
+    const strikeTriggeredRef = useRef(false);
+
+    useEffect(() => {
+        if (!isActive || !overlayRef.current) return;
+
+        // Fade in the overlay
+        gsap.to(overlayRef.current, {
+            opacity: 1,
+            duration: 1.5,
+            ease: "power2.out"
+        });
+
+        // GSAP ticker for smooth 60fps beat-reactive updates
+        const updateVisuals = () => {
+            if (!audioDataRef?.current || !isActive) return;
+
+            const { energy, peak, bassEnergy, currentTime = 0, duration = 0, trackTitle = "" } = audioDataRef.current;
+
+            // --- THEME DETECTION ---
+            const isSuperman = trackTitle === "What Are You Going To Do When You Are Not Saving The World?";
+            const isOppenheimer = trackTitle === "Can You Hear The Music";
+            const isInterstellar = trackTitle === "Cornfield Chase";
+
+            // --- SCRIPTED SEQUENCE LOGIC ---
+            let scriptedDarkness = 0;
+            let flickerSuppression = 1.0;
+            let parasiteScale = 1.8; // Edge of screen
+            let parasiteOpacity = 0;
+            let isTransitioning = false;
+
+            // Superman Timings (134s - 158s spread, 158s-160.5s dark, 160.5s+ reveal)
+            if (isSuperman) {
+                if (currentTime < 158) strikeTriggeredRef.current = false;
+
+                if (currentTime >= 134 && currentTime < 158) {
+                    const progress = (currentTime - 134) / 24;
+                    scriptedDarkness = Math.min(progress * 1.1, 1);
+                    parasiteScale = 1.8 - (progress * 0.8);
+                    parasiteOpacity = Math.min(progress * 1.5, 1);
+                    if (progress > 0.5) flickerSuppression = Math.max(0, 1.0 - ((progress - 0.5) * 2));
+                } else if (currentTime >= 158 && currentTime < 160.5) {
+                    scriptedDarkness = 1.0; parasiteScale = 1.0; parasiteOpacity = 1.0; flickerSuppression = 0; isTransitioning = true;
+                } else if (currentTime >= 160.5 && currentTime < 172) {
+                    const revealProgress = (currentTime - 160.5) / 11.5;
+                    scriptedDarkness = 1.0 - revealProgress;
+                    parasiteScale = 1.0 + (revealProgress * 1.5);
+                    parasiteOpacity = 1.0 - revealProgress;
+                    flickerSuppression = revealProgress;
+                }
+            }
+            // Oppenheimer & Interstellar Timings (0s - 42s spread, 42s-43s dark/depth, 43s+ reveal)
+            else if (isOppenheimer || isInterstellar) {
+                if (currentTime < 42) strikeTriggeredRef.current = false;
+
+                if (currentTime >= 0 && currentTime < 42) {
+                    const progress = currentTime / 42; // Build over the first 42 seconds
+                    scriptedDarkness = Math.min(progress * 1.1, 1);
+                    parasiteScale = 1.8 - (progress * 0.8);
+                    parasiteOpacity = Math.min(progress * 1.5, 1);
+                    if (progress > 0.5) flickerSuppression = Math.max(0, 1.0 - ((progress - 0.5) * 2));
+                } else if (currentTime >= 42 && currentTime < 43) {
+                    scriptedDarkness = 1.0; parasiteScale = 1.0; parasiteOpacity = 1.0; flickerSuppression = 0; isTransitioning = true;
+                } else if (currentTime >= 43 && currentTime < 55) {
+                    const revealProgress = (currentTime - 43) / 12;
+                    scriptedDarkness = 1.0 - revealProgress;
+                    parasiteScale = 1.0 + (revealProgress * 1.5);
+                    parasiteOpacity = 1.0 - revealProgress;
+                    flickerSuppression = revealProgress;
+                }
+            }
+
+            // --- END OF SONG FADE OUT ---
+            let finalFadeOut = 1.0;
+            if (duration > 0 && currentTime > duration - 5) {
+                finalFadeOut = Math.max(0, (duration - currentTime) / 5);
+            }
+
+            // --- THEMED VISUALS ---
+            let themeColors = {
+                flash: 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 40%, transparent 70%)',
+                energy: 'radial-gradient(circle at 50% 60%, rgba(100, 100, 100, 0.5) 0%, rgba(50, 50, 50, 0.3) 40%, transparent 70%)',
+                atmosphere: '#000',
+                vignette: 'rgba(0, 0, 0, 0.7)'
+            };
+
+            if (isOppenheimer) {
+                themeColors = {
+                    ...themeColors,
+                    energy: 'radial-gradient(circle at 50% 60%, rgba(255, 170, 0, 0.4) 0%, rgba(255, 80, 0, 0.2) 40%, transparent 70%)',
+                    atmosphere: '#1a0500',
+                    vignette: 'rgba(26, 5, 0, 0.8)'
+                };
+            } else if (isInterstellar) {
+                themeColors = {
+                    ...themeColors,
+                    energy: 'radial-gradient(circle at 50% 60%, rgba(100, 200, 255, 0.3) 0%, rgba(0, 100, 255, 0.1) 40%, transparent 70%)',
+                    atmosphere: '#000814', // Deep Space Navy
+                    vignette: 'rgba(0, 8, 20, 0.8)'
+                };
+            }
+
+            const amplifiedBass = Math.min(bassEnergy * 5, 1.5);
+            const amplifiedEnergy = Math.min(energy * 8, 1.5);
+
+            // Energy Field
+            if (energyFieldRef.current) {
+                const baseScale = 1 + (amplifiedBass * 0.8);
+                const opacity = (0.2 + (amplifiedBass * 0.8)) * flickerSuppression * finalFadeOut;
+                energyFieldRef.current.style.background = themeColors.energy;
+                energyFieldRef.current.style.transform = `scale(${baseScale})`;
+                energyFieldRef.current.style.opacity = opacity;
+            }
+
+            // Thunder Flash
+            if (flashRef.current) {
+                if (isTransitioning || finalFadeOut === 0) {
+                    flashRef.current.style.opacity = 0;
+                } else {
+                    const flashOpacity = (bassEnergy > 0.1 ? 0.6 + (bassEnergy * 0.4) : (bassEnergy > 0.05 ? 0.3 + (bassEnergy * 0.3) : 0)) * flickerSuppression * finalFadeOut;
+                    if (flashOpacity > 0) {
+                        flashRef.current.style.background = themeColors.flash;
+                        flashRef.current.style.opacity = flashOpacity;
+                        gsap.to(flashRef.current, {
+                            opacity: 0,
+                            duration: bassEnergy > 0.1 ? 0.08 : 0.2,
+                            ease: bassEnergy > 0.1 ? "power4.out" : "power2.out"
+                        });
+                    }
+                }
+            }
+
+            // Atmosphere
+            if (atmosphereRef.current) {
+                const baseDarkness = Math.max(0.7, scriptedDarkness);
+                const atmosphereOpacity = Math.min(baseDarkness + (amplifiedEnergy * 0.3), 1) * finalFadeOut;
+                atmosphereRef.current.style.backgroundColor = themeColors.atmosphere;
+                atmosphereRef.current.style.opacity = atmosphereOpacity;
+
+                const scaleBoost = 1 + (amplifiedEnergy * 0.08) + (scriptedDarkness * 0.1);
+                atmosphereRef.current.style.transform = `scale(${scaleBoost})`;
+            }
+
+            // Vignette
+            if (vignetteRef.current) {
+                vignetteRef.current.style.background = `radial-gradient(circle at 50% 50%, transparent 30%, ${themeColors.vignette} 100%)`;
+            }
+
+            // Parasite Spread Layer
+            if (parasiteRef.current) {
+                parasiteRef.current.style.background = isOppenheimer
+                    ? `radial-gradient(circle at 50% 50%, transparent 20%, ${themeColors.atmosphere} 70%, ${themeColors.atmosphere} 100%)`
+                    : 'radial-gradient(circle at 50% 50%, transparent 20%, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 1) 100%)';
+                parasiteRef.current.style.transform = `scale(${parasiteScale})`;
+                parasiteRef.current.style.opacity = parasiteOpacity * finalFadeOut;
+            }
+        };
+
+        gsap.ticker.add(updateVisuals);
+
+        return () => {
+            gsap.ticker.remove(updateVisuals);
+            if (overlayRef.current) {
+                gsap.to(overlayRef.current, {
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.in"
+                });
+            }
+        };
+    }, [isActive, audioDataRef]);
+
+    if (!isActive) return null;
+
+    return (
+        <div
+            ref={overlayRef}
+            className="absolute inset-0 pointer-events-none overflow-hidden"
+            style={{ zIndex: 1, opacity: 0 }} // zIndex 1 to be above bg but below content
+        >
+            {/* Base Cinematic Atmosphere - Pure Black for "Complete Dark" effect */}
+            <div
+                ref={atmosphereRef}
+                className="absolute inset-0 transition-opacity duration-150"
+                style={{
+                    backgroundColor: '#000',
+                    opacity: 0.7,
+                    willChange: 'transform, opacity'
+                }}
+            />
+
+            {/* Energy Field - Neutral grey gravity ripple (More Light) */}
+            <div
+                ref={energyFieldRef}
+                className="absolute inset-0 transition-transform"
+                style={{
+                    background: 'radial-gradient(circle at 50% 60%, rgba(100, 100, 100, 0.5) 0%, rgba(50, 50, 50, 0.3) 40%, transparent 70%)',
+                    transform: 'scale(1)',
+                    opacity: 0.1,
+                    willChange: 'transform, opacity'
+                }}
+            />
+
+            {/* Thunder Flash - Centered Bright Burst */}
+            <div
+                ref={flashRef}
+                className="absolute inset-0"
+                style={{
+                    background: 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 40%, transparent 70%)',
+                    opacity: 0,
+                    willChange: 'opacity'
+                }}
+            />
+
+            {/* Parasite Spread Layer (Venom/Viral Capture) */}
+            <div
+                ref={parasiteRef}
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: 'radial-gradient(circle at 50% 50%, transparent 20%, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 1) 100%)',
+                    transform: 'scale(1.8)',
+                    opacity: 0,
+                    willChange: 'transform, opacity'
+                }}
+            />
+
+            {/* Vignette - Cinematic frame */}
+            <div
+                ref={vignetteRef}
+                className="absolute inset-0"
+                style={{
+                    background: 'radial-gradient(circle at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.7) 100%)'
+                }}
+            />
+
+            {/* Film Grain - Subtle IMAX texture */}
+            <div
+                ref={grainRef}
+                className="absolute inset-0 opacity-[0.1]"
+                style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                    mixBlendMode: 'overlay'
+                }}
+            />
+
+            {/* Subtle Horizontal Artifacts - IMAX feel */}
+            <div
+                className="absolute left-0 w-full h-[1px] bg-white/5 blur-[4px] animate-pulse"
+                style={{ top: '30%' }}
+            />
+            <div
+                className="absolute left-0 w-full h-[1px] bg-white/5 blur-[4px] animate-pulse"
+                style={{ top: '70%', animationDelay: '1s' }}
+            />
+        </div>
+    );
+};
+
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -536,6 +913,32 @@ const AntiGravitySpace = ({ isActive }) => {
     const boundsRef = useRef(null);
     const [portalReady, setPortalReady] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+
+    // Cinematic Effect State
+    const [cinematicMode, setCinematicMode] = useState(false);
+    const audioDataRef = useRef({ energy: 0, bassEnergy: 0, peak: 0 });
+
+    // Handle audio data from AppleMusicCard
+    const handleAudioData = useCallback((data) => {
+        // Update the ref (no re-render)
+        audioDataRef.current = data;
+
+        // Check if this is a track with a cinematic sequence
+        const isManOfSteel = data.trackTitle === "What Are You Going To Do When You Are Not Saving The World?";
+        const isOppenheimer = data.trackTitle === "Can You Hear The Music";
+        const isInterstellar = data.trackTitle === "Cornfield Chase";
+        const hasCinematicSequence = isManOfSteel || isOppenheimer || isInterstellar;
+
+        // Only update state if it changes (to avoid re-renders)
+        setCinematicMode(prevMode => {
+            if (hasCinematicSequence && data.energy > 0) {
+                return true;
+            } else if (!hasCinematicSequence || data.energy === 0) {
+                return false;
+            }
+            return prevMode;
+        });
+    }, []);
 
     // Initial check for mobile
     useEffect(() => {
@@ -816,7 +1219,7 @@ const AntiGravitySpace = ({ isActive }) => {
                             {item.type === 'spotify' ? (
                                 <SpotifyCard item={item} />
                             ) : item.type === 'apple' ? (
-                                <AppleMusicCard item={item} />
+                                <AppleMusicCard item={item} onAudioData={handleAudioData} />
                             ) : item.type === 'video' ? (
                                 <MacVideoCard item={item} />
                             ) : item.type === 'project' ? (
@@ -882,6 +1285,9 @@ const AntiGravitySpace = ({ isActive }) => {
                         </h1>
                     </div>
                 </div>
+
+                {/* Cinematic Background Effect - Support for Superman & Oppenheimer */}
+                <CinematicOverlay audioDataRef={audioDataRef} isActive={cinematicMode} />
 
                 <div ref={contentRef} className="absolute top-12 w-full text-center pointer-events-none z-10">
                     <p className="text-[#86868b] text-[14px] md:text-[17px] font-normal tracking-normal opacity-90">
