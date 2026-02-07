@@ -76,11 +76,11 @@ const PhotographySpace = () => {
     }, []);
 
     useEffect(() => {
-        const handleMouseMove = (e) => {
+        const handleInteraction = (clientX, clientY) => {
             if (!sectionRef.current) return;
             const rect = sectionRef.current.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
 
             const dist = Math.hypot(x - lastPos.current.x, y - lastPos.current.y);
 
@@ -90,9 +90,21 @@ const PhotographySpace = () => {
             }
         };
 
+        const handleMouseMove = (e) => handleInteraction(e.clientX, e.clientY);
+        const handleTouchMove = (e) => {
+            if (e.touches && e.touches[0]) {
+                handleInteraction(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        };
+
         const section = sectionRef.current;
         section?.addEventListener('mousemove', handleMouseMove, { passive: true });
-        return () => section?.removeEventListener('mousemove', handleMouseMove);
+        section?.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+        return () => {
+            section?.removeEventListener('mousemove', handleMouseMove);
+            section?.removeEventListener('touchmove', handleTouchMove);
+        };
     }, [addImage]);
 
     return (
