@@ -12,6 +12,8 @@ import { NaukriIcon } from './assets/components/LogoLoop/Icon.jsx';
 // Import LogoLoop correctly from the new file
 import LogoLoop from './assets/components/LogoLoop/LogoLoop.jsx';
 import AntiGravitySpace from './assets/components/AntiGravitySpace/AntiGravitySpace.jsx';
+import PhotographySpace from './assets/components/PhotographySpace/PhotographySpace.jsx';
+import PhotographyGallery from './assets/components/PhotographySpace/PhotographyGallery.jsx';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -364,8 +366,8 @@ function App() {
             <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 transition-all duration-1000 delay-300 transform ${isProjectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               {projectsData.map((project, index) => (
                 <div key={project.id} className="max-w-[380px] mx-auto bg-white/5 border border-white/10 rounded-[22px] overflow-hidden hover:border-white/30 hover:bg-white/10 transition-all duration-500 group flex flex-col h-full backdrop-blur-xl shadow-2xl">
-                  <div className="relative w-full h-[240px] overflow-hidden shrink-0">
-                    <img src={project.image} alt={project.title} className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105" />
+                  <div className="relative w-full aspect-[16/10] overflow-hidden shrink-0">
+                    <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
 
@@ -440,7 +442,13 @@ function App() {
           </h1>
         </section>
 
-        <AntiGravitySpace isActive={isSpaceActive} />
+        {isSpaceActive && (
+          <>
+            <AntiGravitySpace isActive={isSpaceActive} />
+            <PhotographySpace />
+            <PhotographyGallery />
+          </>
+        )}
       </div>
     </div>
   );
