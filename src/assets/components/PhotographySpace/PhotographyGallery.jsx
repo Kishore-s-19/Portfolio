@@ -38,16 +38,22 @@ const PhotographyGallery = () => {
                 </div>
 
                 {/* Masonry Grid Layout using CSS Columns */}
-                <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+                <div
+                    className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8"
+                    role="list"
+                    aria-label="Photography Portfolio Gallery"
+                >
                     {IMAGES.map((img, index) => (
                         <div
                             key={index}
                             className="break-inside-avoid shadow-[0_20px_40px_rgba(0,0,0,0.1)] overflow-hidden bg-gray-50"
+                            role="listitem"
                         >
                             <img
                                 src={img}
-                                alt={`Photography ${index + 1}`}
+                                alt={`High quality photography shot ${index + 1} by Kishore S`}
                                 className="w-full h-auto object-contain block pointer-events-none"
+                                loading="lazy"
                             />
                         </div>
                     ))}

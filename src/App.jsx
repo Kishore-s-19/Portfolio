@@ -248,40 +248,45 @@ function App() {
 
   return (
     <div className="w-full min-h-screen relative overflow-x-hidden bg-black font-apple">
-      {/* Main Landing Page */}
-      <section className="w-full h-screen relative transition-opacity duration-700 overflow-hidden font-outfit" ref={landingRef}>
-        <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
-          {useShaderBackground && isLandingVisible ? <PaperShaderBackground /> : (
-            <div className="absolute inset-0 w-full h-full bg-black bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,255,255,0.15)_0%,transparent_40%),radial-gradient(ellipse_at_80%_80%,rgba(255,255,255,0.12)_0%,transparent_40%),radial-gradient(ellipse_at_40%_20%,rgba(255,255,255,0.1)_0%,transparent_40%)] animate-pulse" />
-          )}
-        </div>
+      <main>
+        {/* Main Landing Page */}
+        <section className="w-full h-screen relative transition-opacity duration-700 overflow-hidden font-outfit" ref={landingRef}>
+          <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
+            {useShaderBackground && isLandingVisible ? <PaperShaderBackground /> : (
+              <div className="absolute inset-0 w-full h-full bg-black bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,255,255,0.15)_0%,transparent_40%),radial-gradient(ellipse_at_80%_80%,rgba(255,255,255,0.12)_0%,transparent_40%),radial-gradient(ellipse_at_40%_20%,rgba(255,255,255,0.1)_0%,transparent_40%)] animate-pulse" />
+            )}
+          </div>
 
-        <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-white pointer-events-none">
-          <div className="text-center flex flex-col items-center gap-10 pointer-events-auto">
-            <h1 className="text-6xl md:text-[7.2rem] font-bold leading-[1.05] m-0 bg-white bg-clip-text text-transparent tracking-tight px-4">
-              Kishore S<br />Portfolio
-            </h1>
-            <div className="flex flex-col md:flex-row gap-6">
-              <button
-                className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
-                onClick={handleLearnMoreClick}
-              >
-                About Me
-              </button>
-              <button
-                className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
-                onClick={() => window.open('https://drive.google.com/file/d/1YJBHRP7CLYkAGEfLA0wKvh8ax_QFmBu1/view?usp=sharing', '_blank')}
-              >
-                Resume
-              </button>
+          <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-white pointer-events-none">
+            <div className="text-center flex flex-col items-center gap-10 pointer-events-auto">
+              <h1 className="text-6xl md:text-[7.2rem] font-bold leading-[1.05] m-0 bg-white bg-clip-text text-transparent tracking-tight px-4">
+                Kishore S<br />Portfolio
+              </h1>
+              <div className="flex flex-col md:flex-row gap-6">
+                <button
+                  aria-label="Learn more about Kishore S"
+                  className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
+                  onClick={handleLearnMoreClick}
+                >
+                  About Me
+                </button>
+                <button
+                  aria-label="View Resume"
+                  className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
+                  onClick={() => window.open('https://drive.google.com/file/d/1YJBHRP7CLYkAGEfLA0wKvh8ax_QFmBu1/view?usp=sharing', '_blank')}
+                >
+                  Resume
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <div className="opacity-0 animate-fade-in fill-mode-forwards">
-        <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef}>
+        <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef} aria-labelledby="about-heading">
           <div className="relative z-10 min-h-screen flex flex-col md:flex-row items-center w-full px-[5%] font-apple font-bold overflow-hidden">
+            <header className="sr-only">
+              <h2 id="about-heading">About Kishore S</h2>
+            </header>
             <div ref={aboutTextRef} className="w-full md:w-[55%] shrink-0 text-[28px] md:text-[45px] leading-tight tracking-tight pt-32 pb-10">
               {(() => {
                 const paragraphs = [];
@@ -325,7 +330,12 @@ function App() {
                     willChange: 'transform'
                   }}
                 >
-                  <img src={portraitImage} alt="Portrait" className="w-full h-full object-cover grayscale brightness-90 contrast-110 transition-all duration-700 hover:scale-105" />
+                  <img
+                    src={portraitImage}
+                    alt="Kishore S Portrait - UI/UX Designer and Developer"
+                    className="w-full h-full object-cover grayscale brightness-90 contrast-110 transition-all duration-700 hover:scale-105"
+                    loading="lazy"
+                  />
                 </div>
                 {/* Subtle edge glow/blend overlay */}
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
@@ -438,7 +448,7 @@ function App() {
             <PhotographyGallery />
           </>
         )}
-      </div>
+      </main>
     </div>
   );
 }
