@@ -62,7 +62,7 @@ function App() {
   const [isLandingVisible, setIsLandingVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [useShaderBackground, setUseShaderBackground] = useState(true);
-  const [showBackToTopButton, setShowBackToTopButton] = useState(false);
+
 
   // Anti-Gravity Space Logic
   const [isSpaceActive, setIsSpaceActive] = useState(false);
@@ -173,7 +173,6 @@ function App() {
           if (entry.target === projectsRef.current && entry.isIntersecting) setIsProjectsVisible(true);
           if (entry.target === contactRef.current) {
             if (entry.isIntersecting) setIsContactVisible(true);
-            setShowBackToTopButton(entry.isIntersecting);
           }
         });
       },
@@ -245,11 +244,6 @@ function App() {
   const handleBackToTop = () => {
     setIsSpaceActive(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // setTimeout(() => {
-    //   setShowAboutPage(false);
-    //   setIsProjectsVisible(false);
-    //   setIsContactVisible(false);
-    // }, 600);
   };
 
   return (
@@ -340,12 +334,7 @@ function App() {
           </div>
         </section>
 
-        <button
-          className={`fixed bottom-4 right-4 md:bottom-10 md:right-10 bg-white/10 border-2 border-gray-400/70 text-gray-400/70 py-2 px-4 md:py-3 md:px-8 rounded-full text-[10px] md:text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-md z-[9999] hidden md:block ${showBackToTopButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
-          onClick={handleBackToTop}
-        >
-          Back to Top
-        </button>
+
 
         <section className="w-full py-10 relative bg-black z-20">
           <MemoFlowingMenu items={menuItems} />
