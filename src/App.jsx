@@ -274,7 +274,7 @@ function App() {
               </button>
               <button
                 className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
-                onClick={() => window.open('https://drive.google.com/file/d/1YhfLLa9elkESSoeHWxqzj8XU6b535RPg/view?usp=sharing', '_blank')}
+                onClick={() => window.open('https://drive.google.com/file/d/1YJBHRP7CLYkAGEfLA0wKvh8ax_QFmBu1/view?usp=sharing', '_blank')}
               >
                 Resume
               </button>
