@@ -78,8 +78,8 @@ function App() {
     const handleWheel = (e) => {
       if (isSpaceActive) return;
 
-      // check if at bottom
-      const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 2;
+      // check if at bottom (relaxed for better reliability)
+      const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
 
       if (scrolledToBottom && e.deltaY > 0) {
         // User is trying to scroll down while at receiver
@@ -443,13 +443,15 @@ function App() {
           </h1>
         </section>
 
-        {isSpaceActive && (
-          <Suspense fallback={<div className="h-20 flex justify-center items-center text-white/50">Warping Space...</div>}>
-            <AntiGravitySpace isActive={isSpaceActive} />
-            <PhotographySpace />
-            <PhotographyGallery />
-          </Suspense>
-        )}
+        <div id="anti-gravity-section">
+          {isSpaceActive && (
+            <Suspense fallback={<div className="w-full h-screen bg-black flex justify-center items-center text-white/50 font-apple">Warping Space...</div>}>
+              <AntiGravitySpace isActive={isSpaceActive} />
+              <PhotographySpace />
+              <PhotographyGallery />
+            </Suspense>
+          )}
+        </div>
       </main>
 
       {/* Hidden SEO Content for Crawlers */}
