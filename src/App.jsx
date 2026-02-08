@@ -1,7 +1,7 @@
 // src/App.jsx
 import React, { useState, useRef, useEffect, memo } from 'react';
 import './index.css'; // Changed from App.css to index.css for Tailwind v4
-import PaperShaderBackground from './assets/components/ShaderBackground/PaperShaderBackground.jsx';
+const PaperShaderBackground = React.lazy(() => import('./assets/components/ShaderBackground/PaperShaderBackground.jsx'));
 import portraitImage from './assets/images/IMG_2566.PNG';
 import FlowingMenu from './assets/components/FlowingMenu';
 import SkillsSection from './assets/components/SkillsSection/SkillsSection';
@@ -11,9 +11,10 @@ import { NaukriIcon } from './assets/components/LogoLoop/Icon.jsx';
 
 // Import LogoLoop correctly from the new file
 import LogoLoop from './assets/components/LogoLoop/LogoLoop.jsx';
-import AntiGravitySpace from './assets/components/AntiGravitySpace/AntiGravitySpace.jsx';
-import PhotographySpace from './assets/components/PhotographySpace/PhotographySpace.jsx';
-import PhotographyGallery from './assets/components/PhotographySpace/PhotographyGallery.jsx';
+const AntiGravitySpace = React.lazy(() => import('./assets/components/AntiGravitySpace/AntiGravitySpace.jsx'));
+const PhotographySpace = React.lazy(() => import('./assets/components/PhotographySpace/PhotographySpace.jsx'));
+const PhotographyGallery = React.lazy(() => import('./assets/components/PhotographySpace/PhotographyGallery.jsx'));
+import { Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -248,210 +249,239 @@ function App() {
 
   return (
     <div className="w-full min-h-screen relative overflow-x-hidden bg-black font-apple">
+      {/* Hidden SEO Content for Crawlers */}
+      <div className="sr-only" aria-hidden="true">
+        <h1>Kishore S | UI/UX Designer & Full-Stack Developer</h1>
+        <p>
+          I'm Kishore S, a 21-year-old developer and designer specializing in immersive UI/UX experiences and full-stack software development.
+          My skills include React, Next.js, Web Development, Software Engineering, and creating cinematic web experiences.
+          This portfolio showcases my featured work, including interactive projects built with GSAP, Three.js, and modern web technologies.
+        </p>
+        <h2>My Skills</h2>
+        <ul>
+          <li>UI/UX Design</li>
+          <li>Full-Stack Development</li>
+          <li>React & Next.js</li>
+          <li>Animation & Interactivity (GSAP, Framer Motion)</li>
+          <li>Creative Coding (Three.js, WebGL)</li>
+        </ul>
+        <h2>Experience & Projects</h2>
+        <p>
+          Explore my featured work which focuses on interactive excellence and fluid experiences.
+          I build softwares and designs that tell a story through every pixel.
+        </p>
+      </div>
+
       <main>
-        {/* Main Landing Page */}
-        <section className="w-full h-screen relative transition-opacity duration-700 overflow-hidden font-outfit" ref={landingRef}>
-          <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
-            {useShaderBackground && isLandingVisible ? <PaperShaderBackground /> : (
-              <div className="absolute inset-0 w-full h-full bg-black bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,255,255,0.15)_0%,transparent_40%),radial-gradient(ellipse_at_80%_80%,rgba(255,255,255,0.12)_0%,transparent_40%),radial-gradient(ellipse_at_40%_20%,rgba(255,255,255,0.1)_0%,transparent_40%)] animate-pulse" />
-            )}
-          </div>
+        <Suspense fallback={<div className="w-full h-screen bg-black flex justify-center items-center text-white font-apple">Loading Experience...</div>}>
+          {/* Main Landing Page */}
+          <section className="w-full h-screen relative transition-opacity duration-700 overflow-hidden font-outfit" ref={landingRef} aria-label="Hero Section">
+            <div className="absolute inset-0 z-0 w-full h-full overflow-hidden" aria-hidden="true">
+              {useShaderBackground && isLandingVisible ? <PaperShaderBackground /> : (
+                <div className="absolute inset-0 w-full h-full bg-black bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,255,255,0.15)_0%,transparent_40%),radial-gradient(ellipse_at_80%_80%,rgba(255,255,255,0.12)_0%,transparent_40%),radial-gradient(ellipse_at_40%_20%,rgba(255,255,255,0.1)_0%,transparent_40%)] animate-pulse" />
+              )}
+            </div>
 
-          <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-white pointer-events-none">
-            <div className="text-center flex flex-col items-center gap-10 pointer-events-auto">
-              <h1 className="text-6xl md:text-[7.2rem] font-bold leading-[1.05] m-0 bg-white bg-clip-text text-transparent tracking-tight px-4">
-                Kishore S<br />Portfolio
-              </h1>
-              <div className="flex flex-col md:flex-row gap-6">
-                <button
-                  aria-label="Learn more about Kishore S"
-                  className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
-                  onClick={handleLearnMoreClick}
-                >
-                  About Me
-                </button>
-                <button
-                  aria-label="View Resume"
-                  className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
-                  onClick={() => window.open('https://drive.google.com/file/d/1YJBHRP7CLYkAGEfLA0wKvh8ax_QFmBu1/view?usp=sharing', '_blank')}
-                >
-                  Resume
-                </button>
+            <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-white pointer-events-none">
+              <div className="text-center flex flex-col items-center gap-10 pointer-events-auto">
+                <h1 className="text-6xl md:text-[7.2rem] font-bold leading-[1.05] m-0 bg-white bg-clip-text text-transparent tracking-tight px-4">
+                  Kishore S<br />Portfolio
+                </h1>
+                <nav className="flex flex-col md:flex-row gap-6" aria-label="Primary navigation">
+                  <button
+                    aria-label="Scroll to About Me section"
+                    className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
+                    onClick={handleLearnMoreClick}
+                  >
+                    About Me
+                  </button>
+                  <button
+                    aria-label="Open Resume in a new tab"
+                    className="bg-white/5 border border-white/20 text-white py-4 w-48 rounded-full text-[17px] font-medium cursor-pointer transition-all duration-300 hover:bg-white hover:text-black hover:border-white hover:-translate-y-1 backdrop-blur-xl outline-none flex justify-center items-center font-apple tracking-tight"
+                    onClick={() => window.open('https://drive.google.com/file/d/1YJBHRP7CLYkAGEfLA0wKvh8ax_QFmBu1/view?usp=sharing', '_blank')}
+                  >
+                    Resume
+                  </button>
+                </nav>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef} aria-labelledby="about-heading">
-          <div className="relative z-10 min-h-screen flex flex-col md:flex-row items-center w-full px-[5%] font-apple font-bold overflow-hidden">
-            <header className="sr-only">
-              <h2 id="about-heading">About Kishore S</h2>
-            </header>
-            <div ref={aboutTextRef} className="w-full md:w-[55%] shrink-0 text-[28px] md:text-[45px] leading-tight tracking-tight pt-32 pb-10">
-              {(() => {
-                const paragraphs = [];
-                let currentPara = [];
-                aboutLines.forEach(line => {
-                  if (line === "") {
-                    if (currentPara.length > 0) paragraphs.push(currentPara);
-                    paragraphs.push(""); // Spacer indicator
-                    currentPara = [];
-                  } else {
-                    currentPara.push(line);
-                  }
-                });
-                if (currentPara.length > 0) paragraphs.push(currentPara);
+          <section className="w-full min-h-screen relative bg-black" ref={aboutPageRef} aria-labelledby="about-heading">
+            <div className="relative z-10 min-h-screen flex flex-col md:flex-row items-center w-full px-[5%] font-apple font-bold overflow-hidden">
+              <header className="sr-only">
+                <h2 id="about-heading">About Kishore S</h2>
+              </header>
+              <div ref={aboutTextRef} className="w-full md:w-[55%] shrink-0 text-[28px] md:text-[45px] leading-tight tracking-tight pt-32 pb-10">
+                {(() => {
+                  const paragraphs = [];
+                  let currentPara = [];
+                  aboutLines.forEach(line => {
+                    if (line === "") {
+                      if (currentPara.length > 0) paragraphs.push(currentPara);
+                      paragraphs.push(""); // Spacer indicator
+                      currentPara = [];
+                    } else {
+                      currentPara.push(line);
+                    }
+                  });
+                  if (currentPara.length > 0) paragraphs.push(currentPara);
 
-                return paragraphs.map((para, i) => (
-                  para === "" ? <div key={i} className="h-6" /> : (
-                    <p key={i} className="mb-4">
-                      {para.join(' ').split(' ').map((word, wordIdx) => (
-                        <span key={wordIdx} className="inline-block whitespace-nowrap mr-[0.25em]">
-                          {word.split('').map((char, charIdx) => (
-                            <span key={charIdx} className="reveal-char text-[#2c2c2e]">
-                              {char}
-                            </span>
-                          ))}
-                        </span>
-                      ))}
-                    </p>
-                  )
-                ));
-              })()}
-            </div>
-
-            <div ref={portraitRef} className="w-full md:w-[55%] md:-mr-[10%] h-[50vh] md:h-[95vh] flex justify-center items-center relative z-20" style={{ willChange: 'transform, opacity' }}>
-              <div className="relative w-full max-h-[95vh] aspect-[4/5] overflow-hidden">
-                <div
-                  className="w-full h-full"
-                  style={{
-                    maskImage: 'radial-gradient(circle at center, black 40%, transparent 85%)',
-                    WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 85%)',
-                    willChange: 'transform'
-                  }}
-                >
-                  <img
-                    src={portraitImage}
-                    alt="Kishore S Portrait - UI/UX Designer and Developer"
-                    className="w-full h-full object-cover grayscale brightness-90 contrast-110 transition-all duration-700 hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-                {/* Subtle edge glow/blend overlay */}
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-
-        <section className="w-full py-10 relative bg-black z-20">
-          <MemoFlowingMenu items={menuItems} />
-        </section>
-
-        <SkillsSection />
-
-        <section className="w-full min-h-screen relative bg-black px-[5%] py-20 z-30 font-apple" ref={projectsRef}>
-          <div className="max-w-[1400px] mx-auto">
-            <div className={`transition-all duration-1000 transform ${isProjectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} mb-16`}>
-              <h2 className="text-5xl md:text-[4rem] text-white mb-6 font-bold tracking-tighter leading-tight">Featured Work.</h2>
-              <p className="text-[#86868b] text-xl md:text-2xl leading-relaxed max-w-2xl font-medium tracking-tight">
-                A selection of recent projects built with a focus on
-                interactive excellence and fluid experiences.
-              </p>
-            </div>
-
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 transition-all duration-1000 delay-300 transform ${isProjectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              {projectsData.map((project, index) => (
-                <div key={project.id} className="max-w-[380px] mx-auto bg-white/5 border border-white/10 rounded-[22px] overflow-hidden hover:border-white/30 hover:bg-white/10 transition-all duration-500 group flex flex-col h-full backdrop-blur-xl shadow-2xl">
-                  <div className="relative w-full aspect-[16/10] overflow-hidden shrink-0">
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-
-                  <div className="p-8 flex-grow flex flex-col">
-                    <div className="mb-6">
-                      <h3 className="text-white text-2xl font-semibold mb-3 tracking-tight">{project.title}</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag, i) => (
-                          <span key={i} className="bg-white/5 text-[#86868b] py-1 px-3 rounded-full text-[12px] font-medium border border-white/10">{tag}</span>
+                  return paragraphs.map((para, i) => (
+                    para === "" ? <div key={i} className="h-6" /> : (
+                      <p key={i} className="mb-4">
+                        {para.join(' ').split(' ').map((word, wordIdx) => (
+                          <span key={wordIdx} className="inline-block whitespace-nowrap mr-[0.25em]">
+                            {word.split('').map((char, charIdx) => (
+                              <span key={charIdx} className="reveal-char text-[#2c2c2e]">
+                                {char}
+                              </span>
+                            ))}
+                          </span>
                         ))}
+                      </p>
+                    )
+                  ));
+                })()}
+              </div>
+
+              <div ref={portraitRef} className="w-full md:w-[55%] md:-mr-[10%] h-[50vh] md:h-[95vh] flex justify-center items-center relative z-20" style={{ willChange: 'transform, opacity' }}>
+                <div className="relative w-full max-h-[95vh] aspect-[4/5] overflow-hidden">
+                  <div
+                    className="w-full h-full"
+                    style={{
+                      maskImage: 'radial-gradient(circle at center, black 40%, transparent 85%)',
+                      WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 85%)',
+                      willChange: 'transform'
+                    }}
+                  >
+                    <img
+                      src={portraitImage}
+                      alt="Kishore S Portrait - UI/UX Designer and Developer"
+                      className="w-full h-full object-cover grayscale brightness-90 contrast-110 transition-all duration-700 hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  {/* Subtle edge glow/blend overlay */}
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+
+          <section className="w-full py-10 relative bg-black z-20" aria-label="Navigation Menu">
+            <MemoFlowingMenu items={menuItems} />
+          </section>
+
+          <SkillsSection />
+
+          <section className="w-full min-h-screen relative bg-black px-[5%] py-20 z-30 font-apple" ref={projectsRef} id="projects-section">
+            <div className="max-w-[1400px] mx-auto">
+              <div className={`transition-all duration-1000 transform ${isProjectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} mb-16`}>
+                <h2 className="text-5xl md:text-[4rem] text-white mb-6 font-bold tracking-tighter leading-tight">Featured Work.</h2>
+                <p className="text-[#86868b] text-xl md:text-2xl leading-relaxed max-w-2xl font-medium tracking-tight">
+                  A selection of recent projects built with a focus on
+                  interactive excellence and fluid experiences.
+                </p>
+              </div>
+
+              <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 transition-all duration-1000 delay-300 transform ${isProjectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                {projectsData.map((project, index) => (
+                  <article key={project.id} className="max-w-[380px] mx-auto bg-white/5 border border-white/10 rounded-[22px] overflow-hidden hover:border-white/30 hover:bg-white/10 transition-all duration-500 group flex flex-col h-full backdrop-blur-xl shadow-2xl">
+                    <div className="relative w-full aspect-[16/10] overflow-hidden shrink-0">
+                      <img src={project.image} alt={`Screenshot of ${project.title}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                      <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </div>
+
+                    <div className="p-8 flex-grow flex flex-col">
+                      <div className="mb-6">
+                        <h3 className="text-white text-2xl font-semibold mb-3 tracking-tight">{project.title}</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag, i) => (
+                            <span key={i} className="bg-white/5 text-[#86868b] py-1 px-3 rounded-full text-[12px] font-medium border border-white/10">{tag}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-[#86868b] leading-relaxed mb-8 text-[17px] font-normal flex-grow line-clamp-3">{project.description}</p>
+                      <div className="flex gap-3 mt-auto">
+                        <a href={project.github} className="flex-1 flex items-center justify-center gap-2 text-white/80 py-2.5 px-4 border border-white/10 rounded-full text-[12px] font-medium transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white" target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on GitHub`}>
+                          GitHub
+                        </a>
+                        <a href={project.live} className="flex-1 flex items-center justify-center gap-2 text-white/80 py-2.5 px-4 border border-white/10 rounded-full text-[12px] font-medium transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white" target="_blank" rel="noopener noreferrer" aria-label={`View live demo of ${project.title}`}>
+                          Demo
+                        </a>
                       </div>
                     </div>
-                    <p className="text-[#86868b] leading-relaxed mb-8 text-[17px] font-normal flex-grow line-clamp-3">{project.description}</p>
-                    <div className="flex gap-3 mt-auto">
-                      <a href={project.github} className="flex-1 flex items-center justify-center gap-2 text-white/80 py-2.5 px-4 border border-white/10 rounded-full text-[12px] font-medium transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white" target="_blank" rel="noopener noreferrer">
-                        GitHub
-                      </a>
-                      <a href={project.live} className="flex-1 flex items-center justify-center gap-2 text-white/80 py-2.5 px-4 border border-white/10 rounded-full text-[12px] font-medium transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white" target="_blank" rel="noopener noreferrer">
-                        Demo
-                      </a>
-                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="w-full md:min-h-[80vh] min-h-fit px-[5%] py-32 bg-black relative z-40 font-apple" ref={contactRef}>
+            <div className="max-w-[1400px] mx-auto text-center">
+              <div className={`transition-all duration-800 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} mb-16`}>
+                <h2 className="text-5xl md:text-[4rem] text-white mb-6 font-bold tracking-tighter leading-tight">Connect With Me.</h2>
+                <p className="text-[#86868b] text-xl md:text-2xl leading-relaxed max-w-xl mx-auto font-medium tracking-tight">
+                  Let's discuss your next project or just say hi.
+                </p>
+              </div>
+
+              <div className={`transition-all duration-800 delay-300 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} h-32 overflow-hidden mb-16 px-4 md:px-40 relative`}>
+                <MemoLogoLoop
+                  logos={contactLogos}
+                  speed={60}
+                  direction="left"
+                  logoHeight={isMobile ? 48 : 64}
+                  gap={isMobile ? 40 : 80}
+                  hoverSpeed={20}
+                  fadeOut
+                  fadeOutColor="#000000"
+                  scaleOnHover
+                />
+              </div>
+
+              <div className={`transition-all duration-800 delay-500 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <p className="text-[#86868b] text-xl md:text-2xl font-medium mb-12 tracking-tight">Select an icon to start a conversation.</p>
+                <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-24">
+                  <div className="text-center md:text-left">
+                    <p className="text-[#86868b] text-xs uppercase tracking-[0.2em] mb-3 font-semibold">Email Address</p>
+                    <p className="text-white text-xl font-medium tracking-tight">kdkishore315@gmail.com</p>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="w-full md:min-h-[80vh] min-h-fit px-[5%] py-32 bg-black relative z-40 font-apple" ref={contactRef}>
-          <div className="max-w-[1400px] mx-auto text-center">
-            <div className={`transition-all duration-800 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} mb-16`}>
-              <h2 className="text-5xl md:text-[4rem] text-white mb-6 font-bold tracking-tighter leading-tight">Connect With Me.</h2>
-              <p className="text-[#86868b] text-xl md:text-2xl leading-relaxed max-w-xl mx-auto font-medium tracking-tight">
-                Let's discuss your next project or just say hi.
-              </p>
-            </div>
-
-            <div className={`transition-all duration-800 delay-300 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} h-32 overflow-hidden mb-16 px-4 md:px-40 relative`}>
-              <MemoLogoLoop
-                logos={contactLogos}
-                speed={60}
-                direction="left"
-                logoHeight={isMobile ? 48 : 64}
-                gap={isMobile ? 40 : 80}
-                hoverSpeed={20}
-                fadeOut
-                fadeOutColor="#000000"
-                scaleOnHover
-              />
-            </div>
-
-            <div className={`transition-all duration-800 delay-500 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <p className="text-[#86868b] text-xl md:text-2xl font-medium mb-12 tracking-tight">Select an icon to start a conversation.</p>
-              <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-24">
-                <div className="text-center md:text-left">
-                  <p className="text-[#86868b] text-xs uppercase tracking-[0.2em] mb-3 font-semibold">Email Address</p>
-                  <p className="text-white text-xl font-medium tracking-tight">kdkishore315@gmail.com</p>
-                </div>
-                <div className="text-center md:text-left">
-                  <p className="text-[#86868b] text-xs uppercase tracking-[0.2em] mb-3 font-semibold">Timezone</p>
-                  <p className="text-white text-xl font-medium tracking-tight">IST (GMT +5:30)</p>
+                  <div className="text-center md:text-left">
+                    <p className="text-[#86868b] text-xs uppercase tracking-[0.2em] mb-3 font-semibold">Timezone</p>
+                    <p className="text-white text-xl font-medium tracking-tight">IST (GMT +5:30)</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Signature Footer */}
-        <section className="w-full md:pt-20 pt-10 pb-0 bg-black flex justify-center items-center overflow-hidden select-none relative z-10">
-          <h1 className="font-apple font-bold text-[20vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
-            Kishore
-          </h1>
-        </section>
+          {/* Signature Footer */}
+          <section className="w-full md:pt-20 pt-10 pb-0 bg-black flex justify-center items-center overflow-hidden select-none relative z-10">
+            <h1 className="font-apple font-bold text-[20vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
+              Kishore
+            </h1>
+          </section>
 
-        {isSpaceActive && (
-          <>
-            <AntiGravitySpace isActive={isSpaceActive} />
-            <PhotographySpace />
-            <PhotographyGallery />
-          </>
-        )}
+          {isSpaceActive && (
+            <>
+              <AntiGravitySpace isActive={isSpaceActive} />
+              <PhotographySpace />
+              <PhotographyGallery />
+            </>
+          )}
+        </Suspense>
       </main>
+
+      {/* Footer Branding */}
+      <footer className="sr-only">
+        <p>© 2026 Kishore S. Immersive Portfolio Experience.</p>
+      </footer>
     </div>
   );
 }
 
 export default App;
-

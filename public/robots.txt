@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kishore-s-portfolio.vercel.app/sitemap.xml
