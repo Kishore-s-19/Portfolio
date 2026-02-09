@@ -477,9 +477,19 @@ function App() {
 
         {/* Signature Footer */}
         <section className="w-full md:pt-20 pt-10 pb-0 bg-black flex justify-center items-center overflow-hidden select-none relative z-10">
-          <h1 className="font-apple font-bold text-[20vw] md:text-[18vw] leading-none text-[#1a1a1a] tracking-tight hover:text-[#222] transition-colors duration-700">
+          <p
+            className="leading-none hover:opacity-80 transition-opacity duration-700"
+            style={{
+              fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+              fontSize: '160px',
+              fontWeight: '700',
+              height: '192px',
+              letterSpacing: '-11.2px',
+              color: 'rgb(13, 13, 13)'
+            }}
+          >
             Kishore
-          </h1>
+          </p>
         </section>
 
         <div id="anti-gravity-section">
