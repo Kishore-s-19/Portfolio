@@ -397,12 +397,12 @@ function App() {
           </div>
         </section>
 
-        <div className="bg-black px-[5%] py-20 pb-40">
+        <div className="bg-black px-[5%] py-20 pb-20">
           <section
-            className="mx-auto bg-[#0c0c0c] rounded-[60px] py-24 px-4 md:px-20 relative z-40 font-apple"
+            className="mx-auto bg-[#0c0c0c] rounded-[60px] py-14 px-4 md:px-12 relative z-40 font-apple"
             ref={contactRef}
             style={{
-              width: '90%', // Adjust width here (e.g., 80%, 100%)
+              width: '75%', // Adjust width here (e.g., 80%, 100%)
               maxWidth: '1200px', // Adjust max-width here (e.g., 1000px, 1400px)
               minHeight: '600px' // Adjust min-height here
             }}
