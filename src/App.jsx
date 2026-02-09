@@ -397,9 +397,9 @@ function App() {
           </div>
         </section>
 
-        <div className="bg-black">
-          <section className="w-full md:min-h-[80vh] min-h-fit px-[5%] py-32 bg-[#0c0c0c] rounded-b-[60px] relative z-40 font-apple" ref={contactRef}>
-            <div className="max-w-[1400px] mx-auto text-center">
+        <div className="bg-black px-[5%] py-20 pb-40">
+          <section className="w-full max-w-[1400px] mx-auto bg-[#0c0c0c] rounded-[60px] py-24 px-4 md:px-20 relative z-40 font-apple" ref={contactRef}>
+            <div className="w-full text-center">
               <div className={`transition-all duration-800 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} mb-16`}>
                 <h2 className="text-5xl md:text-[4rem] text-white mb-6 font-bold tracking-tighter leading-tight">Connect With Me.</h2>
                 <p className="text-[#86868b] text-xl md:text-2xl leading-relaxed max-w-xl mx-auto font-medium tracking-tight">
@@ -407,7 +407,7 @@ function App() {
                 </p>
               </div>
 
-              <div className={`transition-all duration-800 delay-300 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} h-32 overflow-hidden mb-16 px-4 md:px-40 relative`}>
+              <div className={`transition-all duration-800 delay-300 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} h-32 overflow-hidden mb-16 relative`}>
                 <LogoLoop
                   logos={contactLogos}
                   speed={60}
@@ -416,7 +416,7 @@ function App() {
                   gap={isMobile ? 40 : 80}
                   hoverSpeed={20}
                   fadeOut
-                  fadeOutColor="#000000"
+                  fadeOutColor="#0c0c0c"
                   scaleOnHover
                 />
               </div>
