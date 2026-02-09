@@ -448,7 +448,11 @@ function App() {
                   <img
                     src={msgImage}
                     alt="Message illustration"
-                    className="w-auto h-32 md:h-48 object-contain opacity-90"
+                    className="object-contain opacity-90"
+                    style={{
+                      width: '400px', // Adjust width here
+                      height: 'auto' // Adjust height here (or set specific px)
+                    }}
                     loading="lazy"
                   />
                 </div>
