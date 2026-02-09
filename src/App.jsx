@@ -416,7 +416,7 @@ function App() {
                   gap={isMobile ? 40 : 80}
                   hoverSpeed={20}
                   fadeOut
-                  fadeOutColor="#0c0c0c"
+                  fadeOutColor="#000000"
                   scaleOnHover
                 />
               </div>
