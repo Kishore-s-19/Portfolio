@@ -399,18 +399,7 @@ function App() {
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag, i) => (
-                          <span
-                            key={i}
-                            className="bg-white/5 text-[#86868b] py-2 px-4 rounded-full border border-white/10"
-                            style={{
-                              fontFamily: 'Inter, sans-serif',
-                              fontSize: '18px', // Scaled slightly for tags while moving towards requested style
-                              fontWeight: '400',
-                              letterSpacing: '-0.78px'
-                            }}
-                          >
-                            {tag}
-                          </span>
+                          <span key={i} className="bg-white/5 text-[#86868b] py-1 px-3 rounded-full text-[12px] font-medium border border-white/10">{tag}</span>
                         ))}
                       </div>
                     </div>
@@ -425,34 +414,10 @@ function App() {
                       {project.description}
                     </p>
                     <div className="flex gap-3 mt-auto">
-                      <a
-                        href={project.github}
-                        className="flex-1 flex items-center justify-center gap-2 text-white/80 py-3 px-4 border border-white/10 rounded-full transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View ${project.title} on GitHub`}
-                        style={{
-                          fontFamily: 'Inter, sans-serif',
-                          fontSize: '20px',
-                          fontWeight: '400',
-                          letterSpacing: '-0.78px'
-                        }}
-                      >
+                      <a href={project.github} className="flex-1 flex items-center justify-center gap-2 text-white/80 py-2.5 px-4 border border-white/10 rounded-full text-[12px] font-medium transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white" target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on GitHub`}>
                         GitHub
                       </a>
-                      <a
-                        href={project.live}
-                        className="flex-1 flex items-center justify-center gap-2 text-white/80 py-3 px-4 border border-white/10 rounded-full transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View live demo of ${project.title}`}
-                        style={{
-                          fontFamily: 'Inter, sans-serif',
-                          fontSize: '20px',
-                          fontWeight: '400',
-                          letterSpacing: '-0.78px'
-                        }}
-                      >
+                      <a href={project.live} className="flex-1 flex items-center justify-center gap-2 text-white/80 py-2.5 px-4 border border-white/10 rounded-full text-[12px] font-medium transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white" target="_blank" rel="noopener noreferrer" aria-label={`View live demo of ${project.title}`}>
                         Demo
                       </a>
                     </div>
