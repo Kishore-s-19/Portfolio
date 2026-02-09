@@ -442,17 +442,17 @@ function App() {
                     <p className="text-white text-xl font-medium tracking-tight">IST (GMT +5:30)</p>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Message Image - Bottom Right Corner */}
-            <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10">
-              <img
-                src={msgImage}
-                alt="Message illustration"
-                className="w-auto h-32 md:h-48 object-contain opacity-90"
-                loading="lazy"
-              />
+                {/* Message Image - Centered below email info */}
+                <div className="flex justify-center mt-12">
+                  <img
+                    src={msgImage}
+                    alt="Message illustration"
+                    className="w-auto h-32 md:h-48 object-contain opacity-90"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
             </div>
           </section>
         </div>
