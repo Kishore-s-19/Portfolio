@@ -433,7 +433,7 @@ function App() {
             className="mx-auto bg-[#0c0c0c] rounded-[60px] py-14 px-4 md:px-12 relative z-40 font-apple overflow-hidden"
             ref={contactRef}
             style={{
-              width: isMobile ? '95%' : '75%', // Responsive width
+              width: isMobile ? '95%' : '160%', // Responsive width
               maxWidth: '1200px',
               minHeight: isMobile ? 'auto' : '750px' // auto height on mobile
             }}
