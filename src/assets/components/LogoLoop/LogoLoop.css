@@ -3,7 +3,8 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height: 140px;   /* 🔥 INCREASE THIS */
+  min-height: 140px;
+  /* 🔥 INCREASE THIS */
   display: flex;
   align-items: center;
   padding: 24px 0;
@@ -64,6 +65,7 @@
 .logoloop--scale-hover .logoloop__item {
   transition: transform 0.3s ease;
 }
+
 .logoloop--scale-hover .logoloop__item:hover {
   transform: scale(1.12);
 }
@@ -86,27 +88,21 @@
 /* LEFT FADE — EXACT EDGE */
 .logoloop--fade::before {
   left: 0;
-  background: linear-gradient(
-    to right,
-    var(--logoloop-fadeColor, #000) 0%,
-    var(--logoloop-fadeColor, #000) 25%,
-    rgba(0, 0, 0, 0.8) 50%,
-    rgba(0, 0, 0, 0.4) 75%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to right,
+      #0c0c0c 0%,
+      rgba(12, 12, 12, 0.9) 30%,
+      rgba(12, 12, 12, 0.5) 60%,
+      rgba(12, 12, 12, 0) 100%);
 }
 
 /* RIGHT FADE — EXACT EDGE */
 .logoloop--fade::after {
   right: 0;
-  background: linear-gradient(
-    to left,
-    var(--logoloop-fadeColor, #000) 0%,
-    var(--logoloop-fadeColor, #000) 25%,
-    rgba(0, 0, 0, 0.8) 50%,
-    rgba(0, 0, 0, 0.4) 75%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to left,
+      #0c0c0c 0%,
+      rgba(12, 12, 12, 0.9) 30%,
+      rgba(12, 12, 12, 0.5) 60%,
+      rgba(12, 12, 12, 0) 100%);
 }
 
 /* ----------------------------- */
@@ -130,21 +126,17 @@
 
 .logoloop--vertical.logoloop--fade::before {
   top: 0;
-  background: linear-gradient(
-    to bottom,
-    var(--logoloop-fadeColor, #000) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to bottom,
+      var(--logoloop-fadeColor, #000) 0%,
+      rgba(0, 0, 0, 0) 100%);
 }
 
 .logoloop--vertical.logoloop--fade::after {
   bottom: 0;
   top: auto;
-  background: linear-gradient(
-    to top,
-    var(--logoloop-fadeColor, #000) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to top,
+      var(--logoloop-fadeColor, #000) 0%,
+      rgba(0, 0, 0, 0) 100%);
 }
 
 /* GAP AT LOOP BOUNDARY */
@@ -153,6 +145,7 @@
   /* Ensure proper spacing between copies */
   margin-right: 0;
 }
+
 /* FORCE BLACK & WHITE THEME */
 .logoloop__item,
 .logoloop__node,
@@ -249,4 +242,3 @@
     width: 50px;
   }
 }
-
