@@ -450,7 +450,7 @@ function App() {
                     alt="Message illustration"
                     className="object-contain opacity-90"
                     style={{
-                      width: '400px', // Adjust width here
+                      width: '500px', // Adjust width here
                       height: 'auto' // Adjust height here (or set specific px)
                     }}
                     loading="lazy"
@@ -458,6 +458,19 @@ function App() {
                 </div>
               </div>
             </div>
+
+            {/* Copyright Text - Bottom Right Corner */}
+            <p
+              className="absolute bottom-6 right-6 md:bottom-8 md:right-10 text-center"
+              style={{
+                fontSize: '10px',
+                fontWeight: '300',
+                letterSpacing: '-0.02em',
+                color: 'rgb(138, 138, 138)'
+              }}
+            >
+              © 2026 Kishore.design. All rights reserved
+            </p>
           </section>
         </div>
 
