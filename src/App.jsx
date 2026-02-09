@@ -398,7 +398,15 @@ function App() {
         </section>
 
         <div className="bg-black px-[5%] py-20 pb-40">
-          <section className="w-full max-w-[1400px] mx-auto bg-[#0c0c0c] rounded-[60px] py-24 px-4 md:px-20 relative z-40 font-apple" ref={contactRef}>
+          <section
+            className="mx-auto bg-[#0c0c0c] rounded-[60px] py-24 px-4 md:px-20 relative z-40 font-apple"
+            ref={contactRef}
+            style={{
+              width: '90%', // Adjust width here (e.g., 80%, 100%)
+              maxWidth: '1200px', // Adjust max-width here (e.g., 1000px, 1400px)
+              minHeight: '600px' // Adjust min-height here
+            }}
+          >
             <div className="w-full text-center">
               <div className={`transition-all duration-800 ${isContactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} mb-16`}>
                 <h2 className="text-5xl md:text-[4rem] text-white mb-6 font-bold tracking-tighter leading-tight">Connect With Me.</h2>
