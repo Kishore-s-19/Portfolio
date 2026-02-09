@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect, memo } from 'react';
 import './index.css'; // Changed from App.css to index.css for Tailwind v4
 import PaperShaderBackground from './assets/components/ShaderBackground/PaperShaderBackground.jsx';
 import portraitImage from './assets/images/IMG_2566.PNG';
+import msgImage from './data/images/msg.avif';
 import FlowingMenu from './assets/components/FlowingMenu';
 import SkillsSection from './assets/components/SkillsSection/SkillsSection';
 import { FaInstagram, FaLinkedin, FaGithub, FaFacebook, FaDiscord } from 'react-icons/fa';
@@ -404,7 +405,7 @@ function App() {
             style={{
               width: '160%', // Adjust width here (e.g., 80%, 100%)
               maxWidth: '1200px', // Adjust max-width here (e.g., 1000px, 1400px)
-              minHeight: '650px' // Adjust min-height here
+              minHeight: '750px' // Adjust min-height here
             }}
           >
             <div className="w-full text-center">
@@ -442,6 +443,16 @@ function App() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Message Image - Bottom Right Corner */}
+            <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10">
+              <img
+                src={msgImage}
+                alt="Message illustration"
+                className="w-auto h-32 md:h-48 object-contain opacity-90"
+                loading="lazy"
+              />
             </div>
           </section>
         </div>
