@@ -53,12 +53,12 @@ export const projectsData = [
     }
 ];
 import newImageCard from './images/IMG_3276.webp';
-import portfolio2026 from './images/portfolio 2026.avif';
+import portfolio2026 from './images/portfolio 2026(1).avif';
 import arrowImage from './images/arrow.avif';
-import createImage from './images/create.avif';
-import designProgressImage from './images/design progress.avif';
-import faceidImage from './images/faceid.avif';
-import whyAmIHereImage from './images/why am i here.avif';
+import createImage from './images/create(1).avif';
+import designProgressImage from './images/design progress(1).avif';
+import faceidImage from './images/faceid(1).avif';
+import whyAmIHereImage from './images/why am i here(1).avif';
 import portraitShot from './images/IMG_3293.png';
 import hansZimmerMusic from './music/Man of Steel Soundtrack ｜ What Are You Going to Do When You Are Not Saving the World？ - Hans Zimmer.mp3';
 import cornfieldChaseMusic from './music/Interstellar Official Soundtrack ｜ Cornfield Chase – Hans Zimmer ｜ WaterTower.mp3';
