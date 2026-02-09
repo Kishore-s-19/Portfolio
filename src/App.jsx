@@ -428,14 +428,14 @@ function App() {
           </div>
         </section>
 
-        <div className="bg-black px-[5%] py-20 pb-0">
+        <div className="bg-black px-[5%] py-20 pb-0 shadow-[0_-20px_50px_rgba(0,0,0,0.8)] relative z-30">
           <section
-            className="mx-auto bg-[#0c0c0c] rounded-[60px] py-14 px-4 md:px-12 relative z-40 font-apple"
+            className="mx-auto bg-[#0c0c0c] rounded-[60px] py-14 px-4 md:px-12 relative z-40 font-apple overflow-hidden"
             ref={contactRef}
             style={{
-              width: '160%', // Adjust width here (e.g., 80%, 100%)
-              maxWidth: '1200px', // Adjust max-width here (e.g., 1000px, 1400px)
-              minHeight: '750px' // Adjust min-height here
+              width: isMobile ? '95%' : '75%', // Responsive width
+              maxWidth: '1200px',
+              minHeight: isMobile ? 'auto' : '750px' // auto height on mobile
             }}
           >
             <div className="w-full text-center">
@@ -474,14 +474,15 @@ function App() {
                 </div>
 
                 {/* Message Image - Centered below email info */}
-                <div className="flex justify-center mt-12">
+                <div className="flex justify-center mt-12 mb-8 md:mb-0">
                   <img
                     src={msgImage}
                     alt="Message illustration"
-                    className="object-contain opacity-90"
+                    className="object-contain opacity-90 transition-all duration-700"
                     style={{
-                      width: '500px', // Adjust width here
-                      height: 'auto' // Adjust height here (or set specific px)
+                      width: isMobile ? '80%' : '500px', // Responsive width
+                      maxWidth: '500px',
+                      height: 'auto'
                     }}
                     loading="lazy"
                   />
@@ -506,15 +507,15 @@ function App() {
         </div>
 
         {/* Signature Footer */}
-        <section className="w-full md:pt-20 pt-10 pb-0 bg-black flex justify-center items-center overflow-hidden select-none relative z-10">
+        <section className="w-full md:pt-20 pt-10 pb-10 bg-black flex justify-center items-center overflow-hidden select-none relative z-10">
           <p
-            className="leading-none hover:opacity-80 transition-opacity duration-700"
+            className="leading-none hover:opacity-80 transition-all duration-700"
             style={{
               fontFamily: 'Inter, "Inter Placeholder", sans-serif',
-              fontSize: '160px',
+              fontSize: isMobile ? '18vw' : '160px', // Responsive font size
               fontWeight: '700',
-              height: '192px',
-              letterSpacing: '-11.2px',
+              height: isMobile ? 'auto' : '192px',
+              letterSpacing: isMobile ? '-0.05em' : '-11.2px',
               color: 'rgb(13, 13, 13)'
             }}
           >
