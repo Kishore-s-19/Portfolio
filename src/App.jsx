@@ -402,9 +402,9 @@ function App() {
             className="mx-auto bg-[#0c0c0c] rounded-[60px] py-14 px-4 md:px-12 relative z-40 font-apple"
             ref={contactRef}
             style={{
-              width: '75%', // Adjust width here (e.g., 80%, 100%)
+              width: '160%', // Adjust width here (e.g., 80%, 100%)
               maxWidth: '1200px', // Adjust max-width here (e.g., 1000px, 1400px)
-              minHeight: '600px' // Adjust min-height here
+              minHeight: '650px' // Adjust min-height here
             }}
           >
             <div className="w-full text-center">
@@ -424,7 +424,7 @@ function App() {
                   gap={isMobile ? 40 : 80}
                   hoverSpeed={20}
                   fadeOut
-                  fadeOutColor="#0c0c0c"
+                  fadeOutColor="#0c0c0c" // Matches card background
                   scaleOnHover
                 />
               </div>
