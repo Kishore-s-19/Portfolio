@@ -397,7 +397,7 @@ function App() {
           </div>
         </section>
 
-        <div className="bg-black px-[5%] py-20 pb-20">
+        <div className="bg-black px-[5%] py-20 pb-0">
           <section
             className="mx-auto bg-[#0c0c0c] rounded-[60px] py-14 px-4 md:px-12 relative z-40 font-apple"
             ref={contactRef}
