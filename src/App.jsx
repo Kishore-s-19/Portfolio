@@ -463,6 +463,7 @@ function App() {
             <p
               className="absolute bottom-6 right-6 md:bottom-8 md:right-10 text-center"
               style={{
+                fontFamily: 'Inter, "Inter Placeholder", sans-serif',
                 fontSize: '10px',
                 fontWeight: '300',
                 letterSpacing: '-0.02em',
