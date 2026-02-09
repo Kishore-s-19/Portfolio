@@ -5,6 +5,7 @@
     overflow: hidden;
     position: relative;
     z-index: 25;
+    font-family: 'Inter', sans-serif;
     /* Between FlowingMenu z-20 and Projects z-30 */
 }
 
@@ -21,10 +22,10 @@
 .skills-title {
     font-size: 3rem;
     font-size: clamp(3rem, 8vw, 4rem);
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 24px;
     color: #ffffff;
-    letter-spacing: var(--tracking-tighter);
+    letter-spacing: -0.07em;
     line-height: 1.1;
 }
 
@@ -50,12 +51,12 @@
 
 .category-title {
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 40px;
     text-align: center;
-    letter-spacing: var(--tracking-tight);
+    letter-spacing: -0.05em;
     color: #ffffff;
-    font-family: var(--font-apple);
+    font-family: 'Inter', sans-serif;
 }
 
 .skills-grid {
@@ -127,11 +128,11 @@
 
 .skill-name {
     font-size: 1.15rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 8px;
     color: #ffffff;
-    letter-spacing: var(--tracking-tight);
-    font-family: var(--font-apple);
+    letter-spacing: -0.03em;
+    font-family: 'Inter', sans-serif;
 }
 
 .skill-level {

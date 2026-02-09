@@ -355,10 +355,15 @@ function App() {
 
         <SkillsSection />
 
-        <section className="w-full min-h-screen relative bg-black px-[5%] py-20 z-30 font-apple" ref={projectsRef} id="projects-section">
+        <section className="w-full min-h-screen relative bg-black px-[5%] py-20 z-30" ref={projectsRef} id="projects-section" style={{ fontFamily: 'Inter, sans-serif' }}>
           <div className="max-w-[1400px] mx-auto">
             <div className={`transition-all duration-1000 transform ${isProjectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} mb-16`}>
-              <h2 className="text-5xl md:text-[4rem] text-white mb-6 font-bold tracking-tighter leading-tight">Featured Work.</h2>
+              <h2
+                className="text-5xl md:text-[4rem] text-white mb-6 font-bold leading-tight"
+                style={{ letterSpacing: '-0.07em' }}
+              >
+                Featured Work.
+              </h2>
               <p className="text-[#86868b] text-xl md:text-2xl leading-relaxed max-w-2xl font-medium tracking-tight">
                 A selection of recent projects built with a focus on
                 interactive excellence and fluid experiences.
