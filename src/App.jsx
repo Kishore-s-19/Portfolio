@@ -364,7 +364,15 @@ function App() {
               >
                 Featured Work.
               </h2>
-              <p className="text-[#86868b] text-xl md:text-2xl leading-relaxed max-w-2xl font-medium tracking-tight">
+              <p
+                className="text-[#86868b] leading-relaxed max-w-2xl font-normal"
+                style={{
+                  fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+                  fontSize: '26px',
+                  fontWeight: '400',
+                  letterSpacing: '-0.78px'
+                }}
+              >
                 A selection of recent projects built with a focus on
                 interactive excellence and fluid experiences.
               </p>
@@ -380,14 +388,31 @@ function App() {
 
                   <div className="p-8 flex-grow flex flex-col">
                     <div className="mb-6">
-                      <h3 className="text-white text-2xl font-semibold mb-3 tracking-tight">{project.title}</h3>
+                      <h3
+                        className="text-white text-2xl font-bold mb-3"
+                        style={{
+                          fontFamily: 'Inter, sans-serif',
+                          letterSpacing: '-0.05em'
+                        }}
+                      >
+                        {project.title}
+                      </h3>
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag, i) => (
                           <span key={i} className="bg-white/5 text-[#86868b] py-1 px-3 rounded-full text-[12px] font-medium border border-white/10">{tag}</span>
                         ))}
                       </div>
                     </div>
-                    <p className="text-[#86868b] leading-relaxed mb-8 text-[17px] font-normal flex-grow line-clamp-3">{project.description}</p>
+                    <p
+                      className="text-[#86868b] leading-relaxed mb-8 font-normal line-clamp-3"
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '16px', // Scaled down for cards from 26px
+                        letterSpacing: '-0.48px' // Scaled kerning
+                      }}
+                    >
+                      {project.description}
+                    </p>
                     <div className="flex gap-3 mt-auto">
                       <a href={project.github} className="flex-1 flex items-center justify-center gap-2 text-white/80 py-2.5 px-4 border border-white/10 rounded-full text-[12px] font-medium transition-all duration-300 bg-white/5 hover:bg-white hover:text-black hover:border-white" target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on GitHub`}>
                         GitHub
